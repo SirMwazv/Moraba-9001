@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Morabaraba2.Data
+namespace Morabaraba9001.Data
 {
     public interface IPlyaer
     {

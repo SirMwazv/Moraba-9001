@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using System.Linq;
-
+using Morabaraba9001.Data;
 
 namespace Morabaraba9001.Test
 {
@@ -11,7 +11,8 @@ namespace Morabaraba9001.Test
         #region Placing
         [Test]
         public void EmptyBoardOnGameStart()
-        {            
+        {
+            GameManager g;
         }
         [Test]
         public void PlayerWithDarkCowsPlaysFirst()

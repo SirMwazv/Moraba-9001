@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Morabaraba2.Data
+namespace Morabaraba9001.Data
 {
     public interface IGameState
     {
@@ -15,7 +15,7 @@ namespace Morabaraba2.Data
     }
     public enum Phase { Placing, Moving, Won, Draw }
 
-    class GameState : IGameState
+    public class GameState : IGameState
     {
         #region Data to be used in GameState Class
 

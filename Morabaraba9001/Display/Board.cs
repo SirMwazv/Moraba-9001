@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Morabaraba2.Data;
-using static Morabaraba2.Data.Position;
+using Morabaraba9001.Data;
+using static Morabaraba9001.Data.Position;
 
-namespace Morabaraba2.Display
+namespace Morabaraba9001.Display
 {
-    class Board
+    public class Board
     {
         static List<Position> CowList1; //list of cows for player 1
         static List<Position> CowList2; //list of cows for player 2

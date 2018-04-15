@@ -1,10 +1,10 @@
-﻿  using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using static Morabaraba2.Display.Board;
+using static Morabaraba9001.Display.Board;
 
-namespace Morabaraba2.Data
+namespace Morabaraba9001.Data
 {
     public interface IGameManager
     {
@@ -15,7 +15,7 @@ namespace Morabaraba2.Data
         void Won(Player winner);
     }
 
-    class GameManager : IGameManager
+    public class GameManager : IGameManager
     {
      
         
