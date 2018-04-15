@@ -1,11 +1,11 @@
 ﻿using System;
 
-using Morabaraba2.Data;
-using Morabaraba2.Display;
+using Morabaraba9001.Data;
+using Morabaraba9001.Display;
 
 //Static using directives so names don't have to be fully qualified 
-using static Morabaraba2.Data.Position;
-using static Morabaraba2.Display.Board;
+using static Morabaraba9001.Data.Position;
+using static Morabaraba9001.Display.Board;
 
 namespace Morabaraba9001
 {
