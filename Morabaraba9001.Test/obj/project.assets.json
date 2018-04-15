@@ -5825,27 +5825,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\MMMutowo\\.nuget\\packages\\": {},
+    "C:\\Users\\tavon\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
-      "projectUniqueName": "C:\\Users\\MMMutowo\\Desktop\\Morabaraba-9001\\Morabaraba9001.Test\\Morabaraba9001.Test.csproj",
+      "projectUniqueName": "E:\\Documents\\GitHub\\Morabaraba-9001\\Morabaraba9001.Test\\Morabaraba9001.Test.csproj",
       "projectName": "Morabaraba9001.Test",
-      "projectPath": "C:\\Users\\MMMutowo\\Desktop\\Morabaraba-9001\\Morabaraba9001.Test\\Morabaraba9001.Test.csproj",
-      "packagesPath": "C:\\Users\\MMMutowo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MMMutowo\\Desktop\\Morabaraba-9001\\Morabaraba9001.Test\\obj\\",
+      "projectPath": "E:\\Documents\\GitHub\\Morabaraba-9001\\Morabaraba9001.Test\\Morabaraba9001.Test.csproj",
+      "packagesPath": "C:\\Users\\tavon\\.nuget\\packages\\",
+      "outputPath": "E:\\Documents\\GitHub\\Morabaraba-9001\\Morabaraba9001.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\MMMutowo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\tavon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
@@ -5857,8 +5857,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\MMMutowo\\Desktop\\Morabaraba-9001\\Morabaraba9001\\Morabaraba9001.csproj": {
-              "projectPath": "C:\\Users\\MMMutowo\\Desktop\\Morabaraba-9001\\Morabaraba9001\\Morabaraba9001.csproj"
+            "E:\\Documents\\GitHub\\Morabaraba-9001\\Morabaraba9001\\Morabaraba9001.csproj": {
+              "projectPath": "E:\\Documents\\GitHub\\Morabaraba-9001\\Morabaraba9001\\Morabaraba9001.csproj"
             }
           }
         }
@@ -5877,7 +5877,6 @@
             "version": "[15.7.0, )"
           },
           "Microsoft.NETCore.App": {
-            "suppressParent": "All",
             "target": "Package",
             "version": "[2.0.0, )",
             "autoReferenced": true
