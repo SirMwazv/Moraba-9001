@@ -1,0 +1,17 @@
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\NUnit3.TestAdapter.dll
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\NUnit3.TestAdapter.pdb
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\nunit.engine.netstandard.dll
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\Mono.Cecil.dll
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\Morabaraba9001.Test.deps.json
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\Morabaraba9001.Test.runtimeconfig.json
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\Morabaraba9001.Test.runtimeconfig.dev.json
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\Morabaraba9001.Test.dll
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\Morabaraba9001.Test.pdb
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\Morabaraba9001.dll
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\bin\Debug\netcoreapp2.0\Morabaraba9001.pdb
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\obj\Debug\netcoreapp2.0\Morabaraba9001.Test.csprojResolveAssemblyReference.cache
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\obj\Debug\netcoreapp2.0\Morabaraba9001.Test.csproj.CoreCompileInputs.cache
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\obj\Debug\netcoreapp2.0\Morabaraba9001.Test.AssemblyInfoInputs.cache
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\obj\Debug\netcoreapp2.0\Morabaraba9001.Test.AssemblyInfo.cs
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\obj\Debug\netcoreapp2.0\Morabaraba9001.Test.dll
+C:\Users\MMMutowo\Desktop\Morabaraba-9001\Morabaraba9001.Test\obj\Debug\netcoreapp2.0\Morabaraba9001.Test.pdb
