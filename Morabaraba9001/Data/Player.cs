@@ -17,7 +17,7 @@ namespace Morabaraba2.Data
         IEnumerable<IEnumerable<Position>> GetMills(Position Pos);
     }
 
-    class Player : IPlyaer
+    public class Player : IPlyaer
     {
         #region Data to be used in Player Class
 
