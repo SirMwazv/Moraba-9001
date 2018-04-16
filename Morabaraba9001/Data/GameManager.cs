@@ -32,6 +32,10 @@ namespace Morabaraba9001.Data
             this.state = state;
         }
 
+        public GameManager()
+        {
+        }
+
         /// <summary>
         /// Initializes Game and manages the game flow.
         /// </summary>

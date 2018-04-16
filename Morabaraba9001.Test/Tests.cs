@@ -2,8 +2,10 @@
 using NUnit.Framework;
 using System.Linq;
 using Morabaraba9001.Data;
+using static Morabaraba9001.Display.Board;
+using static Morabaraba9001.Data.Position;
 
-namespace Morabaraba9001.Test
+namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as our mock board.
 {
     [TestFixture]
     public class Tests
@@ -11,13 +13,15 @@ namespace Morabaraba9001.Test
         #region Placing
         [Test]
         public void EmptyBoardOnGameStart()
-        {
-            GameManager g;
+        {           
+            
         }
         [Test]
-        public void PlayerWithDarkCowsPlaysFirst()
+        public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red)
         {
-        }
+            GameState colour = new GameState();
+            Assert.That(colour.current.playerColor == ConsoleColor.Red);
+        }   
         [Test]
         public void CowsCanOnlyBePlacedOnEmptySpaces()
         {
@@ -25,13 +29,14 @@ namespace Morabaraba9001.Test
         [Test]
         public void MaximumOf12PlacementsPerPlayer()
         {
+            
         }
         [Test]
         public void CowsCannotBeMovedDuringPlacement()
         {
         }
         #endregion
-
+        
         #region Moving
         [Test]
         public void CowCanOnlyMoveToAdjacentSpace()
@@ -46,14 +51,14 @@ namespace Morabaraba9001.Test
         {
         }
         #endregion
-
+        
         #region Flying
         [Test]
         public void CowsCanOnlyMoveToEmptySpaceIfThreeOfThoseCowsRemain()
         {
         }
         #endregion
-
+        
         #region In General
         [Test]
         public void MillFormedByThreeOfTheSameColourCowInALine()
@@ -84,6 +89,8 @@ namespace Morabaraba9001.Test
         {
         }
         #endregion
+     
+
 
     }
 }

@@ -47,6 +47,10 @@ namespace Morabaraba9001.Data
             MyMills = new List<Position[]>();
         }
 
+        public Player()
+        {
+        }
+
         /// <summary>
         /// Method that takes in a position and returns a bool indicating wherether that Cow is in a Mill owned by the player
         /// </summary>
