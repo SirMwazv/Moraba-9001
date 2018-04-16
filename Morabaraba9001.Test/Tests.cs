@@ -29,7 +29,9 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         [Test]
         public void MaximumOf12PlacementsPerPlayer()
         {
-            
+            GameState placement = new GameState();
+            Assert.That(placement.current.Cows.Count <= 12);
+            Assert.That(placement.opponent.Cows.Count <= 12);
         }
         [Test]
         public void CowsCannotBeMovedDuringPlacement()
