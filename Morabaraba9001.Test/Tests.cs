@@ -66,30 +66,32 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         [Test]
         public void MillFormedByThreeOfTheSameColourCowInALine()
         {
+            //Arrange
             Position[] incompleteMills = new Position[] { A7, D7, C5, D5, E4, F4, B2, D2 };
             Player testPlay = new Player("test", ConsoleColor.Black);
             testPlay.Cows = incompleteMills.ToList();
+            List<Position[]> mill1 = new List<Position[]>() { new Position[] { A7, D7, G7 } }.ToList();
+            List<Position[]> mill2 = new List<Position[]>() { new Position[] { C5, D5, E5 } }.ToList();
+            List<Position[]> mill3 = new List<Position[]>() { new Position[] { E4, F4, G4 } }.ToList();
+            List<Position[]> mill4 = new List<Position[]>() { new Position[] { B2, D2, F2 } }.ToList();
 
-            List<Position[]> mill1 = new List<Position[]>() { new Position[] { A7, D7, G7 } };
-            List<Position[]> mill2 = new List<Position[]>() { new Position[] { C5, D5, E5 } };
-            List<Position[]> mill3 = new List<Position[]>() { new Position[] { E4, F4, G4 } };
-            List<Position[]> mill4 = new List<Position[]>() { new Position[] { B2, D2, F2 } };
+            //Act
+            var test1 = testPlay.GetMills(G7).ToList()[0].ToList();
+            var test2 = testPlay.GetMills(E5).ToList()[0].ToList();
+            var test3 = testPlay.GetMills(G4).ToList()[0].ToList();
+            var test4 = testPlay.GetMills(F2).ToList()[0].ToList();
 
-            var test1 = testPlay.GetMills(G7);
-            var test2 = testPlay.GetMills(E5);
-            var test3 = testPlay.GetMills(G4);
-            var test4 = testPlay.GetMills(F2);
-
-            Assert.That(test1 == mill1);
-            Assert.That(test2 == mill2);
-            Assert.That(test3 == mill3);
-            Assert.That(test4 == mill4);
+            //Assert
+            Assert.That(test1[0] == mill1[0][0] && test1[1] == mill1[0][1] && test1[2] == mill1[0][2]);
+            Assert.That(test2[0] == mill2[0][0] && test2[1] == mill2[0][1] && test2[2] == mill2[0][2]);
+            Assert.That(test3[0] == mill3[0][0] && test3[1] == mill3[0][1] && test3[2] == mill3[0][2]);
+            Assert.That(test4[0] == mill4[0][0] && test4[1] == mill4[0][1] && test4[2] == mill4[0][2]);
         }
         [Test]
         public void MillNotFormedByDifferentColouredCowsInALine()
         {
             //Arrange
-            IPosition[] player1Cows = new IPosition[] { A7, C5, E4, B2 };
+            Position[] player1Cows = new Position[] { A7, C5, E4, B2 };
             Position[] player2Cows = new Position[] { D7, D5, F4, D2 };
             Player testPlayer1 = new Player("test", ConsoleColor.Black);
             testPlayer1.Cows = player1Cows.ToList();
@@ -116,7 +118,7 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         {
             //Arrange
             List<Position> incompleteMills = new List<Position>() {A7,G7,C5,E5,E4,G4,B2,F2 };
-            Play
+            
 
             //Act
 
