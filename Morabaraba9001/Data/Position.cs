@@ -10,8 +10,8 @@ namespace Morabaraba9001.Data
     {
         IPosition GetPosition(string pos);
         string ToString();
-        IEnumerable<Position> GetAdjacentPositions(string pos);
-        IEnumerable<IEnumerable<Position>> GetPossibleMills(string pos);
+        IEnumerable<IPosition> GetAdjacentPositions(string pos);
+        IEnumerable<IEnumerable<IPosition>> GetPossibleMills(string pos);
     }
 
     public class Position : IPosition
@@ -54,12 +54,12 @@ namespace Morabaraba9001.Data
             return StaticGetPosition(pos);
         }
 
-        public IEnumerable<Position> GetAdjacentPositions(string pos)
+        public IEnumerable<IPosition> GetAdjacentPositions(string pos)
         {
             return StaticGetAdjacentPositions(pos);
         }
 
-        public IEnumerable<IEnumerable<Position>> GetPossibleMills(string pos)
+        public IEnumerable<IEnumerable<IPosition>> GetPossibleMills(string pos)
         {
             return StaticGetPossibleMills(pos);
         }

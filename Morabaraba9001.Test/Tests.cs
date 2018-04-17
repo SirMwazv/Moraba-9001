@@ -89,7 +89,7 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         public void MillNotFormedByDifferentColouredCowsInALine()
         {
             //Arrange
-            Position[] player1Cows = new Position[] { A7, C5, E4, B2 };
+            IPosition[] player1Cows = new IPosition[] { A7, C5, E4, B2 };
             Position[] player2Cows = new Position[] { D7, D5, F4, D2 };
             Player testPlayer1 = new Player("test", ConsoleColor.Black);
             testPlayer1.Cows = player1Cows.ToList();
@@ -114,6 +114,13 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         [Test]
         public void ConnectedSpacesWithCowsDoNotFormALine()
         {
+            //Arrange
+            List<Position> incompleteMills = new List<Position>() {A7,G7,C5,E5,E4,G4,B2,F2 };
+            Play
+
+            //Act
+
+            //Assert
         }
         [Test]
         public void CanOnlyShootOnTurnThatMillIsCompleted()

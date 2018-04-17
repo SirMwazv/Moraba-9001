@@ -8,10 +8,10 @@ namespace Morabaraba9001.Data
 {
     public interface IGameState
     {
-        bool IsValidPosition(IPosition pos);
-        void SwapPlayers(IGameState state);
+        bool IsValidPosition(Position pos);
+        void SwapPlayers(GameState state);
         bool IsValidInput(string str, Phase phase);
-        bool CheckPhase(IGameState state);
+        bool CheckPhase(GameState state);
     }
     public enum Phase { Placing, Moving, Won, Draw }
 
@@ -57,7 +57,7 @@ namespace Morabaraba9001.Data
         /// </summary>
         /// <param name="inputPos">Position player want to move to</param>
         /// <returns>True if position is free else returns false</returns>
-        public bool IsValidPosition(IPosition inputPos)
+        public bool IsValidPosition(Position inputPos)
         {
             if (current.Cows.Contains(inputPos) || opponent.Cows.Contains(inputPos))
                 return false;
@@ -65,11 +65,11 @@ namespace Morabaraba9001.Data
                 return true;
         }
 
-        public void SwapPlayers(IGameState state) { StaticSwapPlayers((GameState) state); }
+        public void SwapPlayers(GameState state) { StaticSwapPlayers(state); }
 
         public bool IsValidInput(string str, Phase phase) { return StaticIsValidInput(str, phase); }
 
-        public bool CheckPhase(IGameState state) { return StaticCheckPhase((GameState) state); }
+        public bool CheckPhase(GameState state) { return StaticCheckPhase( state); }
 
         //static refrences of methods to call
 

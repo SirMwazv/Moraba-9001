@@ -14,7 +14,7 @@ namespace Morabaraba9001.Data
         bool IsFlying();
         void ShootCow(Position pos);
         void MoveCow(Position oldPos, Position newPos);
-        IEnumerable<IEnumerable<Position>> GetMills(Position Pos);
+        IEnumerable<IEnumerable<IPosition>> GetMills(Position Pos);
     }
 
     public class Player : IPlyaer
@@ -136,7 +136,7 @@ namespace Morabaraba9001.Data
          * NOTE: This method needs to be called before a cow is added to a players cow list so as to check if any mills will be made by the player this makes it so that 
          * there is no need to keep track of the players previous state and next state. 
          */
-        public IEnumerable<IEnumerable<Position>> GetMills(Position Pos) 
+        public IEnumerable<IEnumerable<IPosition>> GetMills(Position Pos) 
         {
             List<Position[]> possibleMills = (List<Position[]>)tmpPos.GetPossibleMills(Pos.pos);
             List<Position[]> finalMills = new List<Position[]>();
