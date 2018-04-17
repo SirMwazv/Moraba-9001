@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Linq;
 using Morabaraba9001.Data;
 using System.Collections.Generic;
+using NSubstitute;
 using static Morabaraba9001.Display.Board;
 using static Morabaraba9001.Data.Position;
 
@@ -68,7 +69,7 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         {
             //Arrange
             Position[] incompleteMills = new Position[] { A7, D7, C5, D5, E4, F4, B2, D2 };
-            Player testPlay = new Player("test", ConsoleColor.Black);
+            Player testPlay = new Player();
             testPlay.Cows = incompleteMills.ToList();
             List<Position[]> mill1 = new List<Position[]>() { new Position[] { A7, D7, G7 } }.ToList();
             List<Position[]> mill2 = new List<Position[]>() { new Position[] { C5, D5, E5 } }.ToList();
@@ -137,12 +138,25 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
             Assert.That(test4.Count() == 0);
         }
         [Test]
-        public void CanOnlyShootOnTurnThatMillIsCompleted()
+        public void CanOnlyShootOnTurnThatMillIsCompleted()//come back to this
         {
+            //Arrange
+            Position[] playerCows = new Position[] { A7, C5, E4, B2 };
+            Player testPlay = new Player();
+            testPlay.Cows = playerCows.ToList();
+            List<Position[]> mill1 = new List<Position[]>() { new Position[] { A7, D7, G7 } }.ToList();
+            List<Position[]> mill2 = new List<Position[]>() { new Position[] { C5, D5, E5 } }.ToList();
+            List<Position[]> mill3 = new List<Position[]>() { new Position[] { E4, F4, G4 } }.ToList();
+            List<Position[]> mill4 = new List<Position[]>() { new Position[] { B2, D2, F2 } }.ToList();
+
+            //Act
+
+            //Assert
+
         }
         [Test]
         public void CannotShootACowInAMillWhenNonMillCowsExist()
-        {
+        {            
         }
         [Test]
         public void CanShootACowInAMillWhenNonMillCowsDoNotExist()
