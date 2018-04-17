@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System.Linq;
 using Morabaraba9001.Data;
+using System.Collections.Generic;
 using static Morabaraba9001.Display.Board;
 using static Morabaraba9001.Data.Position;
 
@@ -65,6 +66,24 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         [Test]
         public void MillFormedByThreeOfTheSameColourCowInALine()
         {
+            Position[] incompleteMills = new Position[] { A7, D7, C5, D5, E4, F4, B2, D2 };
+            Player testPlay = new Player("test", ConsoleColor.Black);
+            testPlay.Cows = incompleteMills.ToList();
+
+            List<Position[]> mill1 = new List<Position[]>() { new Position[] { A7, D7, G7 } };
+            List<Position[]> mill2 = new List<Position[]>() { new Position[] { C5, D5, E5 } };
+            List<Position[]> mill3 = new List<Position[]>() { new Position[] { E4, F4, G4 } };
+            List<Position[]> mill4 = new List<Position[]>() { new Position[] { B2, D2, F2 } };
+
+            var test1 = testPlay.GetMills(G7);
+            var test2 = testPlay.GetMills(E5);
+            var test3 = testPlay.GetMills(G4);
+            var test4 = testPlay.GetMills(F2);
+
+            Assert.That(test1 == mill1);
+            Assert.That(test2 == mill2);
+            Assert.That(test3 == mill3);
+            Assert.That(test4 == mill4);
         }
         [Test]
         public void MillNotFormedByDifferentColouredCowsInALine()
