@@ -194,10 +194,19 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         [Test]
         public void PlayerIsResponsibleForShootingOwnCows()
         {
+            //Arrange
+            Position[] incompleteMills = new Position[] { A7, D7, C5, D5, E4, F4, B2, D2 };
+            Player testPlay = new Player();
+            testPlay.Cows = incompleteMills.ToList();
 
+            //Act
+            testPlay.ShootCow(A7);
+
+            //Assert
+            Assert.That(!testPlay.Cows.Contains(A7));
         }
         #endregion
-     
+
 
 
     }
