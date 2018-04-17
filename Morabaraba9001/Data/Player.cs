@@ -47,7 +47,7 @@ namespace Morabaraba9001.Data
             MyMills = new List<Position[]>();
         }
 
-        public Player() //for testing purposes
+        public Player() //for testing purposes never use in actual code!
         {            
             placedCows = 0;
             deadCows = 0;

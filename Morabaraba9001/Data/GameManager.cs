@@ -17,9 +17,6 @@ namespace Morabaraba9001.Data
 
     public class GameManager : IGameManager
     {
-     
-        
-
         public GameState state;     //holds all the data of the current game state therefore access all player and game state variables through this field 
         public bool replay = false; //represents if players wish to replay the game after it finished. 
         Position tmpPos = new Position("");

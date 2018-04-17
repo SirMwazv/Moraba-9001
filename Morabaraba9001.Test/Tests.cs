@@ -156,7 +156,20 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         }
         [Test]
         public void CannotShootACowInAMillWhenNonMillCowsExist()
-        {            
+        {
+            //Arrange
+            Position[] player1Cows = new Position[] { C5, D5, E5, E4};
+            Position[] player2Cows = new Position[] { A7, D7, G7, B2 };
+            Player testPlayer1 = new Player();
+            testPlayer1.Cows = player1Cows.ToList();
+            Player testPlayer2 = new Player();
+            testPlayer2.Cows = player2Cows.ToList();
+
+            //Act
+            bool check = testPlayer2.AllInAMill();
+
+            //Assert
+            Assert.That(!check);    //should be true if all cows are not in a mill
         }
         [Test]
         public void CanShootACowInAMillWhenNonMillCowsDoNotExist()
