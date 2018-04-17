@@ -21,8 +21,15 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         [Test]
         public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red)
         {
-            GameState colour = new GameState();
-            Assert.That(colour.current.playerColor == ConsoleColor.Red);
+            //Arrange
+            GameState test = new GameState();
+            Player testplayer1 = new Player();
+
+            //Act
+            testplayer1 = test.current;
+
+            //Assert
+            Assert.That(testplayer1.playerColor == ConsoleColor.Red);
         }   
         [Test]
         public void CowsCanOnlyBePlacedOnEmptySpaces()
