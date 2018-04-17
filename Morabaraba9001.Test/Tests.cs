@@ -14,9 +14,20 @@ namespace Morabaraba9001.Test
     {
         #region Placing
         [Test]
-        public void EmptyBoardOnGameStart()
-        {           
-            
+        public void EmptyBoardOnGameStart()//if opponent and current have no placed cows, board is empty
+        {
+            //Arrange
+            GameState test = new GameState();
+           
+
+            //Act
+            Player testplayer1 = test.current;
+            Player testplayer2 = test.opponent;
+
+            //Assert
+            Assert.That(testplayer1.placedCows == 0 && testplayer2.placedCows == 0);
+
+
         }
         [Test]
         public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red) and the player who plays first in the QuickPlay Feature
@@ -36,7 +47,7 @@ namespace Morabaraba9001.Test
         {
         }
         [Test]
-        public void MaximumOf12PlacementsPerPlayer()
+        public void MaximumOf12PlacementsPerPlayer()//Our method of preventing more than 12 placements per player is by switching to the moving phase once both players reach 12 cows.
         {
             //Arrange
             GameState test = new GameState
