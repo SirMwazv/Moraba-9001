@@ -141,17 +141,19 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         public void MultipleMillsAreDetectedInTheSameTurn()//come back to this
         {
             //Arrange
-            Position[] playerCows = new Position[] { A7, C5, E4, B2 };
+            Position[] playerCows = new Position[] { A4, A1, D7, G7 };
             Player testPlay = new Player();
             testPlay.Cows = playerCows.ToList();
-            List<Position[]> mill1 = new List<Position[]>() { new Position[] { A7, D7, G7 } }.ToList();
-            List<Position[]> mill2 = new List<Position[]>() { new Position[] { C5, D5, E5 } }.ToList();
-            List<Position[]> mill3 = new List<Position[]>() { new Position[] { E4, F4, G4 } }.ToList();
-            List<Position[]> mill4 = new List<Position[]>() { new Position[] { B2, D2, F2 } }.ToList();
+            var mill1 = new Position[] { A7, D7, G7 };
+            var mill2 = new Position[] { A7, A4, A1 };
 
             //Act
+            List<Position[]> x = (List<Position[]>) testPlay.GetMills(A7);
 
             //Assert
+            Assert.That( x[0][0] == mill1[0] && x[0][1] == mill1[1] && x[0][2] == mill1[2]);
+            Assert.That(x[1][0] == mill2[0] && x[1][1] == mill2[1] && x[1][2] == mill2[2]);
+
 
         }
         [Test]
