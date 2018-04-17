@@ -138,7 +138,7 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
             Assert.That(test4.Count() == 0);
         }
         [Test]
-        public void CanOnlyShootOnTurnThatMillIsCompleted()//come back to this
+        public void MultipleMillsAreDetectedInTheSameTurn()//come back to this
         {
             //Arrange
             Position[] playerCows = new Position[] { A7, C5, E4, B2 };
