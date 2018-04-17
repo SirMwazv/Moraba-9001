@@ -192,8 +192,9 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
             Assert.That(check);    //should be true if all cows are in a mill
         }
         [Test]
-        public void PlayerCannotShootOwnCows()
+        public void PlayerIsResponsibleForShootingOwnCows()
         {
+
         }
         #endregion
      
