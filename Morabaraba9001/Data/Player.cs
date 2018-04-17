@@ -24,7 +24,7 @@ namespace Morabaraba9001.Data
         public string name;
         public ConsoleColor playerColor;
         public int placedCows, deadCows;
-        public List<Position> Cows;
+        public IList<Position> Cows;
         public string cowState;
         public List<Position[]> MyMills;
         Position tmpPos = new Position("");
@@ -47,8 +47,13 @@ namespace Morabaraba9001.Data
             MyMills = new List<Position[]>();
         }
 
-        public Player()
-        {
+        public Player() //for testing purposes
+        {            
+            placedCows = 0;
+            deadCows = 0;
+            Cows = new List<Position>();
+            cowState = "OnBoard";
+            MyMills = new List<Position[]>();
         }
 
         /// <summary>

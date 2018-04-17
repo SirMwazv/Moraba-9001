@@ -11,8 +11,8 @@ namespace Morabaraba9001.Display
 {
     public class Board
     {
-        static List<Position> CowList1; //list of cows for player 1
-        static List<Position> CowList2; //list of cows for player 2
+        static IList<Position> CowList1; //list of cows for player 1
+        static IList<Position> CowList2; //list of cows for player 2
 
         /// <summary>
         /// Function to print the board to the console 
@@ -21,8 +21,8 @@ namespace Morabaraba9001.Display
         public static void  PrintBoard(GameState state)
         {
             Console.Clear();
-            CowList1 = state.current.Cows;
-            CowList2 = state.opponent.Cows;
+            CowList1 =  state.current.Cows;
+            CowList2 =  state.opponent.Cows;
 
             /// Takes a position and returns the correct color to print it in. 
             ConsoleColor myColor(Position pos)
