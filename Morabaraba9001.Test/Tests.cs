@@ -7,7 +7,7 @@ using NSubstitute;
 using static Morabaraba9001.Display.Board;
 using static Morabaraba9001.Data.Position;
 
-namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as our mock board.
+namespace Morabaraba9001.Test 
 {
     [TestFixture]
     public class Tests
@@ -19,7 +19,7 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
             
         }
         [Test]
-        public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red)
+        public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red) and the player who plays first in the QuickPlay Feature
         {
             //Arrange
             GameState test = new GameState();
@@ -38,9 +38,22 @@ namespace Morabaraba9001.Test //These tests apply to the QuickPlay Feature as ou
         [Test]
         public void MaximumOf12PlacementsPerPlayer()
         {
-            GameState placement = new GameState();
-            Assert.That(placement.current.Cows.Count <= 12);
-            Assert.That(placement.opponent.Cows.Count <= 12);
+            //Arrange
+            GameState test = new GameState
+            {
+                phase = Phase.Placing
+            };
+            test.current.placedCows = 12;
+            test.opponent.placedCows = 12;
+
+            //Act
+            bool result = test.CheckPhase(test);
+
+            //Assert
+            Assert.That(result != false);
+
+
+            
         }
         [Test]
         public void CowsCannotBeMovedDuringPlacement()
