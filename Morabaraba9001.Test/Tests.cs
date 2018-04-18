@@ -30,7 +30,7 @@ namespace Morabaraba9001.Test
 
         }
         [Test]
-        public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red) and the player who plays first in the QuickPlay Feature.
+        public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red) and the player who plays first in the QuickPlay Feature
         {
             //Arrange
             GameState test = new GameState();
@@ -56,7 +56,7 @@ namespace Morabaraba9001.Test
             Position input = A7;
 
             //Act           
-            if (test.IsValidPosition(input) == true)//IsValidPosition checks if the input position is empty or not
+            if (test.IsValidPosition(input) == true)
             {
                 testplayer2.Cows.Add(input);
             }
@@ -98,8 +98,10 @@ namespace Morabaraba9001.Test
         {
             //Arrange
             GameState test = new GameState();
+
             string oldpos1 = "A7";
             Position newpos1 = D7;
+
             string oldpos2 = "A7";
             Position newpos2 = A4;          
 
@@ -126,8 +128,8 @@ namespace Morabaraba9001.Test
             testplayer2 = test.opponent;
             Position[] player1 = new Position[] { A7, D7, C5 };
             testplayer1.Cows = player1.ToList();
-            
-            Position newpos = A7;//This will be the new position that the user wants to move their cow to
+            string oldpos = "A4";
+            Position newpos = A7;
 
             //Act                      
             if (test.IsValidPosition(newpos) == true) 
@@ -137,10 +139,25 @@ namespace Morabaraba9001.Test
 
             //Assert
             Assert.That(!testplayer2.Cows.Contains(A7));
-        } 
+        } //needs to be looked at
         [Test]
         public void MovingDoesNotIncreaseOrDecreaseNumberOfCowsOnTheBoard()
         {
+            //Arrange
+            Position[] incompleteMills = new Position[] { A7, D7, C5, D5, E4, F4, B2 };
+            Player testPlay = new Player();
+            testPlay.Cows = incompleteMills.ToList();
+            int CowsBfore = testPlay.Cows.Count;
+            int CowsAfter = 0;
+
+            //Act
+            testPlay.MoveCow(B2, D2);
+            CowsAfter = testPlay.Cows.Count;
+            //Assert
+            Assert.That(CowsBfore == CowsAfter);
+
+
+
         }
         #endregion
         
