@@ -126,12 +126,13 @@ namespace Morabaraba9001.Test
             testplayer2 = test.opponent;
             Position[] player1 = new Position[] { A7, D7, C5 };
             testplayer1.Cows = player1.ToList();
-            
+            Position cowtomove = A4;
             Position newpos = A7;//This will be the new position that the user wants to move their cow to
 
             //Act                      
             if (test.IsValidPosition(newpos) == true) 
             {
+                cowtomove = newpos;
                 testplayer2.Cows.Add(newpos);
             }
 
