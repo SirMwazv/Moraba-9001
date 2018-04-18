@@ -81,13 +81,14 @@ namespace Morabaraba9001.Test
 
             //Assert
             Assert.That(result != false);
-
-
-            
+   
         }
         [Test]
         public void CowsCannotBeMovedDuringPlacement()
         {
+            //Arrange
+            //Act
+            //Assert
         }
         #endregion
         
@@ -95,6 +96,23 @@ namespace Morabaraba9001.Test
         [Test]
         public void CowCanOnlyMoveToAdjacentSpace()
         {
+            //Arrange
+            GameState test = new GameState();
+
+            string oldpos1 = "A7";
+            Position newpos1 = D7;
+
+            string oldpos2 = "A7";
+            Position newpos2 = A4;          
+
+            //Act
+            bool isitadjacent1 = StaticGetAdjacentPositions(oldpos1).Contains(newpos1);
+            bool isitadjacent2 = StaticGetAdjacentPositions(oldpos2).Contains(newpos2);     
+            
+            //Assert
+            Assert.That(isitadjacent1 = true);
+            Assert.That(isitadjacent2 = true);
+           
         }
         [Test]
         public void CowCanOnlyMoveOnEmptySpace()
