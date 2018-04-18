@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Morabaraba9001.Data
         bool IsValidPosition(Position pos);
         void SwapPlayers(GameState state);
         bool IsValidInput(string str, Phase phase);
-        bool CheckPhase(GameState state);
+        bool CheckPhase(GameState state);        
     }
     public enum Phase { Placing, Moving, Won, Draw }
 
@@ -19,12 +20,15 @@ namespace Morabaraba9001.Data
     {
         #region Data to be used in GameState Class
 
-        public Player current, opponent, winner;
+        public Player current, opponent, winner,loser;
         public Phase phase;
         public ConsoleColor defaultColor;
         public static Position tmpPos = new Position("");
 
         #endregion
+
+        //Count Number of turns per game
+        public int Turns;
 
         /// <summary>
         /// Declare a default new game state 
@@ -33,7 +37,7 @@ namespace Morabaraba9001.Data
         {
             current = new Player("Player 1", ConsoleColor.Red);
             opponent = new Player("Player 2", ConsoleColor.Green);
-
+            Turns = 0;
             phase = Phase.Placing;
             defaultColor = ConsoleColor.Gray;
         }
@@ -50,6 +54,7 @@ namespace Morabaraba9001.Data
             opponent = player_y;
             defaultColor = col;
             phase = Phase.Placing;
+            Turns = 0;
         }
 
         /// <summary>
@@ -82,6 +87,7 @@ namespace Morabaraba9001.Data
             Player tmp = state.current;
             state.current = state.opponent;
             state.opponent = tmp;
+            state.Turns++;
 
         }
 
@@ -134,6 +140,7 @@ namespace Morabaraba9001.Data
                     if (state.current.Cows.Count == 2)
                     {
                         state.winner = state.opponent;
+                        state.loser = state.current;
                         state.phase = Phase.Won;
                         return true;
                     }
@@ -141,6 +148,7 @@ namespace Morabaraba9001.Data
                     if (state.opponent.Cows.Count == 2)
                     {
                         state.winner = state.current;
+                        state.loser = state.opponent;
                         state.phase = Phase.Won;
                         return true;
                     }
@@ -152,6 +160,41 @@ namespace Morabaraba9001.Data
                     
             }
             return false;
+        }
+
+        /// <summary>
+        /// Records the highscore for the game 
+        /// </summary>
+        /// <param name="state">Current Game State</param>
+        public void RecordHighScore(GameState state)
+        {            
+            if (!File.Exists("Highscore.txt"))  //create file if not exists
+                File.CreateText("Highscore.txt");
+
+            using (StreamWriter score = new StreamWriter("Highscore.txt"))  //automatically dispose of stream after use
+            {
+                score.Write(String.Format("Winner: {0}, Loser: {1}, Number of Turns: {2} \n",state.winner.name,state.loser.name,state.Turns));   
+            }
+        }
+
+        public void OpenHighScore()
+        {
+            try
+            {
+                using (StreamReader score = File.OpenText("Highscore.txt"))
+                {
+                    while (!score.EndOfStream)
+                    {
+                        Console.WriteLine(score.ReadLine());
+                    }
+                }
+                Console.ReadLine();
+            }
+            catch(FileNotFoundException x)
+            {
+                Console.WriteLine("\nNo HighScores Exist! Play The game to make new highscores.");
+                Console.ReadLine();
+            }
         }
 
     }
