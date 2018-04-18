@@ -45,6 +45,25 @@ namespace Morabaraba9001.Test
         [Test]
         public void CowsCanOnlyBePlacedOnEmptySpaces()
         {
+            //Arrange
+            GameState test = new GameState();
+            Player testplayer1 = new Player();
+            Player testplayer2 = new Player();
+            testplayer1 = test.current;
+            testplayer2 = test.opponent;
+
+            //Act
+            Position[] player1 = new Position[] { A7, D7, C5};            
+            testplayer1.Cows = player1.ToList();
+            Position input = A7;
+            if (test.IsValidPosition(A7) == true)
+            {
+                testplayer2.Cows.Add(A7);
+            }
+            
+            //Assert
+            Assert.That(!testplayer2.Cows.Contains(A7));
+
         }
         [Test]
         public void MaximumOf12PlacementsPerPlayer()//Our method of preventing more than 12 placements per player is by switching to the moving phase once both players reach 12 cows.
