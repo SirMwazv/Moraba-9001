@@ -30,7 +30,7 @@ namespace Morabaraba9001.Test
 
         }
         [Test]
-        public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red) and the player who plays first in the QuickPlay Feature
+        public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red) and the player who plays first in the QuickPlay Feature.
         {
             //Arrange
             GameState test = new GameState();
