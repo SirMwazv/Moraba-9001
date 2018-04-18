@@ -139,7 +139,7 @@ namespace Morabaraba9001.Test
 
             //Assert
             Assert.That(!testplayer2.Cows.Contains(A7));
-        }
+        } //needs to be looked at
         [Test]
         public void MovingDoesNotIncreaseOrDecreaseNumberOfCowsOnTheBoard()
         {
