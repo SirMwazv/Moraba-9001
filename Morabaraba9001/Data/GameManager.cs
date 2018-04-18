@@ -165,7 +165,7 @@ namespace Morabaraba9001.Data
                     Position oldPos = (Position) tmpPos.GetPosition(input.Substring(0,2));    
                     Position newPos = (Position) tmpPos.GetPosition(input.Substring(2, 2));
 
-                    if (state.IsValidPosition(newPos))    //validate position is free
+                    if (state.IsValidPosition(newPos) && state.current.Cows.Contains(oldPos))    //validate new position is free and player owns the old cow 
                     {
                         if (state.current.IsFlying() || tmpPos.GetAdjacentPositions(oldPos.pos).Contains(newPos))   //check for flying cows or if cows are adjacent 
                         {
@@ -195,7 +195,7 @@ namespace Morabaraba9001.Data
                     }
                     else
                     {
-                        PrintErr("Can't move to a position already in use!");
+                        PrintErr("Can only move your cows to a free position!");
                         Console.ReadLine();
                         continue;
                     }
