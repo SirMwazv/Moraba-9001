@@ -51,14 +51,14 @@ namespace Morabaraba9001.Test
             Player testplayer2 = new Player();
             testplayer1 = test.current;
             testplayer2 = test.opponent;
-
-            //Act
-            Position[] player1 = new Position[] { A7, D7, C5};            
+            Position[] player1 = new Position[] { A7, D7, C5 };
             testplayer1.Cows = player1.ToList();
             Position input = A7;
-            if (test.IsValidPosition(A7) == true)
+
+            //Act           
+            if (test.IsValidPosition(input) == true)
             {
-                testplayer2.Cows.Add(A7);
+                testplayer2.Cows.Add(input);
             }
             
             //Assert
@@ -117,6 +117,28 @@ namespace Morabaraba9001.Test
         [Test]
         public void CowCanOnlyMoveOnEmptySpace()
         {
+            //Arrange
+            GameState test = new GameState
+            {
+                phase = Phase.Moving
+            };
+            Player testplayer1 = new Player();
+            Player testplayer2 = new Player();
+            testplayer1 = test.current;
+            testplayer2 = test.opponent;
+            Position[] player1 = new Position[] { A7, D7, C5 };
+            testplayer1.Cows = player1.ToList();
+            string oldpos = "A4";
+            Position newpos = A7;
+
+            //Act                      
+            if (test.IsValidPosition(newpos) == true) 
+            {
+                testplayer2.Cows.Add(newpos);
+            }
+
+            //Assert
+            Assert.That(!testplayer2.Cows.Contains(A7));
         }
         [Test]
         public void MovingDoesNotIncreaseOrDecreaseNumberOfCowsOnTheBoard()
