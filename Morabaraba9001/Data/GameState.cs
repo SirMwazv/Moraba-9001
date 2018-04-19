@@ -8,10 +8,10 @@ namespace Morabaraba9001.Data
 {
     public interface IGameState
     {
-        bool IsValidPosition(Position pos);
-        void SwapPlayers(GameState state);
+        bool IsValidPosition(IPosition pos);
+        void SwapPlayers(IGameState state);
         bool IsValidInput(string str, Phase phase);
-        bool CheckPhase(GameState state);
+        bool CheckPhase(IGameState state);
     }
     public enum Phase { Placing, Moving, Won, Draw }
 
@@ -44,8 +44,10 @@ namespace Morabaraba9001.Data
         /// <param name="x">Player 1 </param>
         /// <param name="y">Player 2</param>
         /// <param name="col">Optional Default Console Color</param>
-        public GameState(Player player_x, Player player_y, ConsoleColor col = ConsoleColor.Gray) //NOTE: Default Console Color 'col' is optional 
+        public GameState(IPlayer x, IPlayer y, ConsoleColor col = ConsoleColor.Gray) //NOTE: Default Console Color 'col' is optional 
         {
+            Player player_x = (Player)x;
+            Player player_y = (Player)y;
             current = player_x;
             opponent = player_y;
             defaultColor = col;
@@ -57,19 +59,20 @@ namespace Morabaraba9001.Data
         /// </summary>
         /// <param name="inputPos">Position player want to move to</param>
         /// <returns>True if position is free else returns false</returns>
-        public bool IsValidPosition(Position inputPos)
+        public bool IsValidPosition(IPosition iPos)
         {
+            Position inputPos = (Position)iPos;
             if (current.Cows.Contains(inputPos) || opponent.Cows.Contains(inputPos))
                 return false;
             else
                 return true;
         }
 
-        public void SwapPlayers(GameState state) { StaticSwapPlayers(state); }
+        public void SwapPlayers(IGameState state) { StaticSwapPlayers(state); }
 
         public bool IsValidInput(string str, Phase phase) { return StaticIsValidInput(str, phase); }
 
-        public bool CheckPhase(GameState state) { return StaticCheckPhase( state); }
+        public bool CheckPhase(IGameState state) { return StaticCheckPhase( state); }
 
         //static refrences of methods to call
 
@@ -77,8 +80,9 @@ namespace Morabaraba9001.Data
         /// Method to swap players by making 'current' player into 'opponent' and vice versa
         /// </summary>
         /// <param name="state">Current Game State</param>
-        public static void StaticSwapPlayers(GameState state)
+        public static void StaticSwapPlayers(IGameState s)
         {
+            GameState state = (GameState)s;
             Player tmp = state.current;
             state.current = state.opponent;
             state.opponent = tmp;
@@ -117,8 +121,9 @@ namespace Morabaraba9001.Data
         /// </summary>
         /// <param name="state">Current Game State</param>
         /// <returns>True if game should move to next phase otherwise returns false</returns>
-        public static bool StaticCheckPhase(GameState state)
-        {                 
+        public static bool StaticCheckPhase(IGameState s)
+        {
+            GameState state = (GameState)s;
             switch (state.phase)
             {
                 case Phase.Placing:
