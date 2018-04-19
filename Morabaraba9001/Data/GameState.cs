@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +9,10 @@ namespace Morabaraba9001.Data
 {
     public interface IGameState
     {
-        bool IsValidPosition(IPosition pos);
-        void SwapPlayers(IGameState state);
+        bool IsValidPosition(Position pos);
+        void SwapPlayers(GameState state);
         bool IsValidInput(string str, Phase phase);
-        bool CheckPhase(IGameState state);
+        bool CheckPhase(GameState state);        
     }
     public enum Phase { Placing, Moving, Won, Draw }
 
@@ -19,12 +20,15 @@ namespace Morabaraba9001.Data
     {
         #region Data to be used in GameState Class
 
-        public Player current, opponent, winner;
+        public Player current, opponent, winner,loser;
         public Phase phase;
         public ConsoleColor defaultColor;
         public static Position tmpPos = new Position("");
 
         #endregion
+
+        //Count Number of turns per game
+        public int Turns;
 
         /// <summary>
         /// Declare a default new game state 
@@ -33,7 +37,7 @@ namespace Morabaraba9001.Data
         {
             current = new Player("Player 1", ConsoleColor.Red);
             opponent = new Player("Player 2", ConsoleColor.Green);
-
+            Turns = 0;
             phase = Phase.Placing;
             defaultColor = ConsoleColor.Gray;
         }
@@ -44,14 +48,13 @@ namespace Morabaraba9001.Data
         /// <param name="x">Player 1 </param>
         /// <param name="y">Player 2</param>
         /// <param name="col">Optional Default Console Color</param>
-        public GameState(IPlayer x, IPlayer y, ConsoleColor col = ConsoleColor.Gray) //NOTE: Default Console Color 'col' is optional 
+        public GameState(Player player_x, Player player_y, ConsoleColor col = ConsoleColor.Gray) //NOTE: Default Console Color 'col' is optional 
         {
-            Player player_x = (Player)x;
-            Player player_y = (Player)y;
             current = player_x;
             opponent = player_y;
             defaultColor = col;
             phase = Phase.Placing;
+            Turns = 0;
         }
 
         /// <summary>
@@ -59,20 +62,19 @@ namespace Morabaraba9001.Data
         /// </summary>
         /// <param name="inputPos">Position player want to move to</param>
         /// <returns>True if position is free else returns false</returns>
-        public bool IsValidPosition(IPosition iPos)
+        public bool IsValidPosition(Position inputPos)
         {
-            Position inputPos = (Position)iPos;
             if (current.Cows.Contains(inputPos) || opponent.Cows.Contains(inputPos))
                 return false;
             else
                 return true;
         }
 
-        public void SwapPlayers(IGameState state) { StaticSwapPlayers(state); }
+        public void SwapPlayers(GameState state) { StaticSwapPlayers(state); }
 
         public bool IsValidInput(string str, Phase phase) { return StaticIsValidInput(str, phase); }
 
-        public bool CheckPhase(IGameState state) { return StaticCheckPhase( state); }
+        public bool CheckPhase(GameState state) { return StaticCheckPhase( state); }
 
         //static refrences of methods to call
 
@@ -80,12 +82,12 @@ namespace Morabaraba9001.Data
         /// Method to swap players by making 'current' player into 'opponent' and vice versa
         /// </summary>
         /// <param name="state">Current Game State</param>
-        public static void StaticSwapPlayers(IGameState s)
+        public static void StaticSwapPlayers(GameState state)
         {
-            GameState state = (GameState)s;
             Player tmp = state.current;
             state.current = state.opponent;
             state.opponent = tmp;
+            state.Turns++;
 
         }
 
@@ -121,9 +123,8 @@ namespace Morabaraba9001.Data
         /// </summary>
         /// <param name="state">Current Game State</param>
         /// <returns>True if game should move to next phase otherwise returns false</returns>
-        public static bool StaticCheckPhase(IGameState s)
-        {
-            GameState state = (GameState)s;
+        public static bool StaticCheckPhase(GameState state)
+        {                 
             switch (state.phase)
             {
                 case Phase.Placing:
@@ -139,6 +140,7 @@ namespace Morabaraba9001.Data
                     if (state.current.Cows.Count == 2)
                     {
                         state.winner = state.opponent;
+                        state.loser = state.current;
                         state.phase = Phase.Won;
                         return true;
                     }
@@ -146,6 +148,7 @@ namespace Morabaraba9001.Data
                     if (state.opponent.Cows.Count == 2)
                     {
                         state.winner = state.current;
+                        state.loser = state.opponent;
                         state.phase = Phase.Won;
                         return true;
                     }
@@ -159,5 +162,41 @@ namespace Morabaraba9001.Data
             return false;
         }
 
+        /// <summary>
+        /// Records the highscore for the game 
+        /// </summary>
+        /// <param name="state">Current Game State</param>
+        public void RecordHighScore(GameState state)
+        {            
+            if (!File.Exists("Highscore.txt"))  //create file if not exists
+                File.CreateText("Highscore.txt");
+
+            using (StreamWriter score = new StreamWriter("Highscore.txt"))  //automatically dispose of stream after use
+            {
+                score.Write(String.Format("Winner: {0}, Loser: {1}, Number of Turns: {2} \n",state.winner.name,state.loser.name,state.Turns));   
+            }
+        }
+
+        public void OpenHighScore()
+        {
+            try
+            {
+                using (StreamReader score = File.OpenText("Highscore.txt"))
+                {
+                    while (!score.EndOfStream)
+                    {
+                        Console.WriteLine(score.ReadLine());
+                    }
+                }
+                Console.ReadLine();
+            }
+            catch(FileNotFoundException x)
+            {
+                Console.WriteLine(x.Message+"\nNo HighScores Exist! Play The game to make new highscores.");
+                Console.ReadLine();
+            }
+        }
+
     }
 }
+
