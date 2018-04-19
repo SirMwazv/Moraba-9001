@@ -29,7 +29,7 @@ namespace Morabaraba9001.Data
             this.state = state;
         }
 
-        public GameManager()
+        public GameManager()    //only for testing!
         {
         }
 
