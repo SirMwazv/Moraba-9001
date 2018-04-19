@@ -143,13 +143,41 @@ namespace Morabaraba9001.Test
         [Test]
         public void MovingDoesNotIncreaseOrDecreaseNumberOfCowsOnTheBoard()
         {
+            //Arrange
+            Position[] incompleteMills = new Position[] { A7, D7, C5, D5, E4, F4, B2 };
+            Player testPlay = new Player();
+            testPlay.Cows = incompleteMills.ToList();
+            int CowsBfore = testPlay.Cows.Count;
+            int CowsAfter = 0;
+
+            //Act
+            testPlay.MoveCow(B2, D2);
+            CowsAfter = testPlay.Cows.Count;
+            //Assert
+            Assert.That(CowsBfore == CowsAfter);
+
+
+
         }
         #endregion
         
         #region Flying
         [Test]
-        public void CowsCanOnlyMoveToEmptySpaceIfThreeOfThoseCowsRemain()
+        public void CowsCanOnlyMoveToNoneAdjacentSpacesIfFlying()
         {
+            //Arrange
+            Player p = new Player();
+            p.cowState = "Flying";
+            Position[] cows = new Position[] { A7, D7, C5};
+            p.Cows = cows.ToList();
+
+            //Act
+            p.MoveCow(A7, E5);
+
+            //Assert
+            Assert.That(p.Cows[0] == D7);
+            Assert.That(p.Cows[1] == C5);
+            Assert.That(p.Cows[2] == E5);
         }
         #endregion
         
