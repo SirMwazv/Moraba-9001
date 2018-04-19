@@ -12,7 +12,7 @@ namespace Morabaraba9001.Data
         void ShootACow();
         void RunPlacing();
         void RunMoving();
-        void Won(Player winner);
+        void Won(IPlayer winner);
     }
 
     public class GameManager : IGameManager
@@ -215,8 +215,9 @@ namespace Morabaraba9001.Data
         /// <summary>
         /// Internal Method to call when game is won 
         /// </summary>
-        public void Won(Player winner)
-        {           
+        public void Won(IPlayer w)
+        {
+            Player winner = (Player)w;
             Console.WriteLine(winner.name + " is the winner!!! \n Play again? Y|N");
             if (char.ToUpper(Console.ReadKey().KeyChar) == 'Y')
                 replay = true;
