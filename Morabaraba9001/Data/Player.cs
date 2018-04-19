@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Morabaraba9001.Data
 {
-    public interface IPlyaer
+    public interface IPlayer
     {
         bool InMill(IPosition pos);
         bool AllInAMill();
@@ -17,7 +17,7 @@ namespace Morabaraba9001.Data
         IEnumerable<IEnumerable<IPosition>> GetMills(IPosition Pos);
     }
 
-    public class Player : IPlyaer
+    public class Player : IPlayer
     {
         #region Data to be used in Player Class
 
