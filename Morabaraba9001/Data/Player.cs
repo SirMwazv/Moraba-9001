@@ -8,13 +8,13 @@ namespace Morabaraba9001.Data
 {
     public interface IPlyaer
     {
-        bool InMill(Position pos);
+        bool InMill(IPosition pos);
         bool AllInAMill();
         void FlyCows();
         bool IsFlying();
-        void ShootCow(Position pos);
-        void MoveCow(Position oldPos, Position newPos);
-        IEnumerable<IEnumerable<IPosition>> GetMills(Position Pos);
+        void ShootCow(IPosition pos);
+        void MoveCow(IPosition oldPos, IPosition newPos);
+        IEnumerable<IEnumerable<IPosition>> GetMills(IPosition Pos);
     }
 
     public class Player : IPlyaer
@@ -61,8 +61,9 @@ namespace Morabaraba9001.Data
         /// </summary>
         /// <param name="pos">Cow to determine whether in a mill or not</param>
         /// <returns>Bool: If cow is in a mill then True otherwise return false</returns>
-        public bool InMill(Position pos)
+        public bool InMill(IPosition p)
         {
+            Position pos = (Position) p;
             foreach (Position[] tmpArr in MyMills)
             {
                 foreach (Position tmp in tmpArr)
@@ -110,8 +111,9 @@ namespace Morabaraba9001.Data
         /// Method that takes in a position and 'shoots' that cow which belongs to the player 
         /// </summary>
         /// <param name="pos">Cow to shoot</param>
-        public void ShootCow(Position pos)
+        public void ShootCow(IPosition p)
         {
+            Position pos = (Position)p;
             List<Position> temp = new List<Position>();
             foreach (var myCow in Cows)
             {
@@ -126,8 +128,10 @@ namespace Morabaraba9001.Data
         /// </summary>
         /// <param name="oldPos">Cow to remove </param>
         /// <param name="newPos">Cow to add</param>
-        public void MoveCow(Position oldPos, Position newPos)
+        public void MoveCow(IPosition oPos, IPosition nPos)
         {
+            Position oldPos = (Position)oPos;
+            Position newPos = (Position)nPos;
             ShootCow(oldPos);
             Cows.Add(newPos);
         }
@@ -141,8 +145,9 @@ namespace Morabaraba9001.Data
          * NOTE: This method needs to be called before a cow is added to a players cow list so as to check if any mills will be made by the player this makes it so that 
          * there is no need to keep track of the players previous state and next state. 
          */
-        public IEnumerable<IEnumerable<IPosition>> GetMills(Position Pos) 
+        public IEnumerable<IEnumerable<IPosition>> GetMills(IPosition p) 
         {
+            Position Pos = (Position)p;
             List<Position[]> possibleMills = (List<Position[]>)tmpPos.GetPossibleMills(Pos.pos);
             List<Position[]> finalMills = new List<Position[]>();
             //filter out mills i already have
