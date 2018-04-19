@@ -162,7 +162,7 @@ namespace Morabaraba9001.Data
         /// </summary>
         /// <param name="pos">Position to get adjacent moves for</param>
         /// <returns>List of adjacent positions</returns>
-        public static IEnumerable<Position> StaticGetAdjacentPositions(string pos)
+        public static IEnumerable<IPosition> StaticGetAdjacentPositions(string pos)
         {
 
             List<Position> ret = new List<Position>();
@@ -298,7 +298,7 @@ namespace Morabaraba9001.Data
         /// </summary>
         /// <param name="pos">Position to get mill combos for</param>
         /// <returns>List of all mill combos with that position as a Position Array</returns>
-        public static IEnumerable<IEnumerable<Position>> StaticGetPossibleMills(string pos)
+        public static IEnumerable<IEnumerable<IPosition>> StaticGetPossibleMills(string pos)
         {
             
             List<Position[]> result = new List<Position[]>();
