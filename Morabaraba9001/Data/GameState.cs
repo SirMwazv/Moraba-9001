@@ -192,7 +192,7 @@ namespace Morabaraba9001.Data
             }
             catch(FileNotFoundException x)
             {
-                Console.WriteLine("\nNo HighScores Exist! Play The game to make new highscores.");
+                Console.WriteLine(x.Message+"\nNo HighScores Exist! Play The game to make new highscores.");
                 Console.ReadLine();
             }
         }

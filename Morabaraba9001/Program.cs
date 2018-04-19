@@ -27,7 +27,7 @@ namespace Morabaraba9001
 
             Console.WriteLine(String.Format("{0} \n{1}", title, cowArt));
 
-            Console.WriteLine("Press 1 for Quickplay \nPress 2 to Setup Game \nPress any other button to Exit.");
+            Console.WriteLine("Press 1 for Quickplay \nPress 2 to Setup Game \nPress 3 for HighScores \nPress any other button to Exit.");
             switch (Console.ReadKey().KeyChar)
             {
                 case '1':
@@ -148,6 +148,10 @@ namespace Morabaraba9001
                     game.RunGame();
 
 
+                    break;
+                case '3':
+                    Console.WriteLine("");
+                    game.state.OpenHighScore();
                     break;
             }
 
