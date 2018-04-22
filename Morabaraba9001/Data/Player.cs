@@ -18,21 +18,27 @@ namespace Morabaraba9001.Data
         IList<Position> Cows { get; set; }
         ConsoleColor playerColor { get; set; }
         int placedCows { get; set; }
+        int deadCows { get; set; }
+        string name { get; set; }
+        string cowState { get; set; }
+        List<Position[]> MyMills { get; set; }
     }
 
     public class Player : IPlayer
     {
         #region Data to be used in Player Class
 
-        public string name;
+        public string myName;
         ConsoleColor myColor;
         public int myPlacedCows, myDeadCows;
         IList<Position> myCows = new List<Position>();
-        public string cowState;
-        public List<Position[]> MyMills;
+        public string myCowState;
+        public List<Position[]> Mills;
         Position tmpPos = new Position("");
 
         #endregion
+
+        public string name { get { return myName; } set { myName = value; } }
 
         public IList<Position> Cows { get { return myCows; } set { myCows = value; } }
 
@@ -40,6 +46,9 @@ namespace Morabaraba9001.Data
 
         public int placedCows { get { return myPlacedCows; } set { myPlacedCows = value; } }
         public int deadCows { get { return myDeadCows; } set { myDeadCows = value; } }
+
+        public string cowState { get { return myCowState; } set { myCowState = value; } }
+        public List<Position[]> MyMills { get { return Mills; } set { Mills = value; } }
 
 
         /// <summary>
