@@ -26,6 +26,7 @@ namespace Morabaraba9001.Display
         ConsoleColor defaultColor;
         IList<IPosition> CowList1; //list of cows for player 1
         IList<IPosition> CowList2; //list of cows for player 2
+        Phase phase;
 
         public Board(IPlayer x, IPlayer y, ConsoleColor defCol = ConsoleColor.Gray)
         {

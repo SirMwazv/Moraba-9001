@@ -15,6 +15,8 @@ namespace Morabaraba9001.Data
         void ShootCow(IPosition pos);
         void MoveCow(IPosition oldPos, IPosition newPos);
         IEnumerable<IEnumerable<IPosition>> GetMills(IPosition Pos);
+        IList<IPosition> Cows { get; set; }
+        ConsoleColor playerColor { get; set; }
     }
 
     public class Player : IPlayer
@@ -22,14 +24,22 @@ namespace Morabaraba9001.Data
         #region Data to be used in Player Class
 
         public string name;
-        public ConsoleColor playerColor;
-        public int placedCows, deadCows;
-        public IList<Position> Cows;
+        ConsoleColor myColor;
+        public int myPlacedCows, myDeadCows;
+        IList<IPosition> myCows = new List<Position>();
         public string cowState;
         public List<Position[]> MyMills;
         Position tmpPos = new Position("");
 
         #endregion
+
+        public IList<IPosition> Cows { get {return myCows; } set { (List<Position>) myCows = value; } }
+
+        public ConsoleColor playerColor { get { return myColor; } set { myColor = value; }  }
+
+        public int placedCows { get { return myPlacedCows; } set { myPlacedCows = value; } }   
+        public int deadCows { get { return myDeadCows; } set { myDeadCows = value; } }
+
 
         /// <summary>
         /// Declare a new player with a name and color 
