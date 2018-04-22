@@ -18,8 +18,8 @@ namespace Morabaraba9001.Data
     {       
         IPlayer X, Y;
         IBoard b;
-        public bool replay = false; //represents if players wish to replay the game after it finished. 
-        IPosition tmpPos;
+        public bool replay = false; //represents if players wish to replay the game after it finished.         
+        GameManager manager;
 
         /// <summary>
         /// Declare new Game Manager with predefined game state 
@@ -27,10 +27,12 @@ namespace Morabaraba9001.Data
         /// <param name="state">New Game State to manage</param>
         public GameManager()
         {
-            X = new Player();
-            Y = new Player();
+            X = new Player("Player 1", ConsoleColor.Red);
+            Y = new Player("Player 2", ConsoleColor.Green);
             b = new Board(X,Y);
-            
+            b.Turns = 0;
+            b.phase = Phase.Placing;
+
         }       
 
         public void init()
@@ -52,11 +54,7 @@ namespace Morabaraba9001.Data
             Console.WriteLine("Press 1 for Quickplay \nPress 2 to Setup Game \nPress 3 for HighScores \nPress any other button to Exit.");
             switch (Console.ReadKey().KeyChar)
             {
-                case '1':
-                    X = new Player("Player 1", ConsoleColor.Red);
-                    Y = new Player("Player 2", ConsoleColor.Green);
-                    b.Turns = 0;
-                    b.phase = Phase.Placing;                    
+                case '1':                                    
                     break;
                 case '2':
                     #region Setup Player 1
@@ -204,7 +202,7 @@ namespace Morabaraba9001.Data
             string shootMe = Console.ReadLine().ToUpper();
             if (b.IsValidInput(shootMe, Phase.Placing))   //validate input (criteria for validation is the same as placing phase)
             {
-                Position shootMePos = (Position) tmpPos.GetPosition(shootMe);
+                Position shootMePos = (Position) b.Positions.GetPosition(shootMe);
                 if (b.Y.Cows.Contains(shootMePos))   //check if cow belongs to opponent 
                 {
                     if (b.Y.AllInAMill() || (!(b.Y.InMill(shootMePos)) && (b.Y.Cows.Contains(shootMePos))) )    //only shoot any cow if all opponent's cows are in a mill
@@ -253,7 +251,7 @@ namespace Morabaraba9001.Data
                 if (b.IsValidInput(input, b.phase))   //validate string format 
                 {
                     //get the placing of new position 
-                    Position newPos = (Position) tmpPos.GetPosition(input);
+                    Position newPos = (Position) b.Positions.GetPosition(input);
 
                     if (b.IsValidPosition(newPos))    //validate position is free
                     {
@@ -311,12 +309,12 @@ namespace Morabaraba9001.Data
                 if (b.IsValidInput(input, b.phase))   //validate string format 
                 {
                     //split input and get old position and new position 
-                    Position oldPos = (Position) tmpPos.GetPosition(input.Substring(0,2));    
-                    Position newPos = (Position) tmpPos.GetPosition(input.Substring(2, 2));
+                    Position oldPos = (Position) b.Positions.GetPosition(input.Substring(0,2));    
+                    Position newPos = (Position) b.Positions.GetPosition(input.Substring(2, 2));
 
                     if (b.IsValidPosition(newPos) && b.X.Cows.Contains(oldPos))    //validate new position is free and player owns the old cow 
                     {
-                        if (b.X.IsFlying() || tmpPos.GetAdjacentPositions(oldPos.pos).Contains(newPos))   //check for flying cows or if cows are adjacent 
+                        if (b.X.IsFlying() || b.Positions.GetAdjacentPositions(oldPos.pos).Contains(newPos))   //check for flying cows or if cows are adjacent 
                         {
                             //check for and get  mills before adding or removing cows 
                             b.X.Cows.Remove(oldPos); //temporarily remove old position before checking mills
