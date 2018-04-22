@@ -174,10 +174,7 @@ namespace Morabaraba9001.Data
                     Console.WriteLine("");
                     b.OpenHighScore();
                     break;
-            }
-
-            if (replay)
-                init();
+            }            
         }
 
         /// <summary>
@@ -368,7 +365,9 @@ namespace Morabaraba9001.Data
             Console.WriteLine(winner.name + " is the winner!!! \n Play again? Y|N");
             if (char.ToUpper(Console.ReadKey().KeyChar) == 'Y')
                 replay = true;
-            
+            if (replay)
+                init();
+
         }
     }
 }
