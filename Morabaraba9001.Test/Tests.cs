@@ -4,8 +4,8 @@ using System.Linq;
 using Morabaraba9001.Data;
 using System.Collections.Generic;
 using NSubstitute;
-using static Morabaraba9001.Display.Board;
-using static Morabaraba9001.Data.Position;
+using Morabaraba9001.Display;
+
 
 namespace Morabaraba9001.Test 
 {
@@ -16,18 +16,14 @@ namespace Morabaraba9001.Test
         [Test]
         public void EmptyBoardOnGameStart()//if opponent and current have no placed cows, board is empty
         {
-            //Arrange
-            GameState test = new GameState();
-           
+            IBoard b = new Board();
 
             //Act
-            Player testplayer1 = test.current;
-            Player testplayer2 = test.opponent;
+            IPlayer one = b.X;
+            IPlayer two = b.Y;
 
             //Assert
-            Assert.That(testplayer1.placedCows == 0 && testplayer2.placedCows == 0);
-
-
+            Assert.That(one.placedCows == 0 && two.placedCows == 0);
         }
         [Test]
         public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red) and the player who plays first in the QuickPlay Feature
