@@ -25,6 +25,7 @@ namespace Morabaraba9001.Display
         IPlayer Y { get; set; }
         Phase phase { get; set; }
         ConsoleColor defaultColor { get; set; }
+        IPosition Positions { get; set; }
         void RecordHighScore();
         void OpenHighScore();
     }
@@ -37,7 +38,9 @@ namespace Morabaraba9001.Display
         IList<Position> CowList2; //list of cows for player 2
         Phase myPhase;
         int turns;
-        public Position Positions = new Position("");
+        public IPosition myPositions = new Position("XX");    //global to refer to all positions
+
+        public IPosition Positions { get { return myPositions; } set { myPositions = value; } }
         public int Turns { get { return turns; } set { turns = value; } }
 
         public ConsoleColor defaultColor {get { return myDefaultColor; } set { myDefaultColor = value; } }
@@ -67,8 +70,7 @@ namespace Morabaraba9001.Display
         /// </summary>
         /// <param name="state">Game State variable holding all necesarry data about the game</param>
         public void PrintBoard()
-        {
-            X = new Player();
+        { 
             Console.Clear();
             CowList1 = X.Cows;
             CowList2 = Y.Cows;
@@ -107,9 +109,9 @@ namespace Morabaraba9001.Display
                 Console.ForegroundColor = defaultColor;
                 Console.Write(String.Format("{0}", board));
             }
-            void PrintPlayer(IPlayer p)
+            void PrintPlayer(IPlayer x)
             {
-                Player x = (Player)p;
+                //Player x = (Player)p;
                 Console.ForegroundColor = x.playerColor;
                 string HUD = string.Format("{0} --> Placed Cows: {1} \t Dead Cows: {2} Cow State: {3}", x.name, x.placedCows, x.deadCows, x.cowState);
                 Console.WriteLine(HUD);
