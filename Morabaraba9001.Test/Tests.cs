@@ -74,18 +74,24 @@ namespace Morabaraba9001.Test
         public void MaximumOf12PlacementsPerPlayer()//Our method of preventing more than 12 placements per player is by switching to the moving phase once both players reach 12 cows.
         {
             //Arrange
-            //GameState test = new GameState
-            //{
-            //    phase = Phase.Placing
-            //};
-            //test.current.placedCows = 12;
-            //test.opponent.placedCows = 12;
+            
 
-            ////Act
-            //bool result = test.CheckPhase(test);
+             Board b = new Board();
+            b.phase = Phase.Placing;
 
-            ////Assert
-            //Assert.That(result != false);
+
+
+            Player p1 = new Player();
+            Player p2 = new Player();
+
+            p1.placedCows = 12;
+            p2.placedCows = 12;
+
+            //Act
+            bool result = b.CheckPhase();
+
+            //Assert
+            Assert.That(result != false);
    
         }
         [Test]
