@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,18 +19,39 @@ namespace Morabaraba9001.Display
         bool IsValidInput(string str, Phase phase);
         bool CheckPhase();
         int Turns { get; set; }
+        IPlayer winner { get; }
+        IPlayer loser { get; }
+        IPlayer X { get; set; }
+        IPlayer Y { get; set; }
+        Phase phase { get; set; }
+        ConsoleColor defaultColor { get; set; }
+        void RecordHighScore();
+        void OpenHighScore();
     }
-
+    public enum Phase { Placing, Moving, Won, Draw }
     public class Board : IBoard
     {
-        IPlayer X, Y, winner, loser;
-        ConsoleColor defaultColor;
+        IPlayer x, y, Winner, Loser;
+        ConsoleColor myDefaultColor;
         IList<Position> CowList1; //list of cows for player 1
         IList<Position> CowList2; //list of cows for player 2
-        Phase phase;
+        Phase myPhase;
         int turns;
         public Position Positions = new Position("");
         public int Turns { get { return turns; } set { turns = value; } }
+
+        public ConsoleColor defaultColor {get { return myDefaultColor; } set { myDefaultColor = value; } }
+        public IPlayer winner { get { return Winner; } set { Winner = value; } }
+        public IPlayer loser { get { return Loser; } set { Loser = value; } }
+        public IPlayer X { get { return x; } set { x = value; } }
+        public IPlayer Y { get { return y; } set { y = value; } }
+
+        public Phase phase { get { return myPhase; } set { myPhase = value; } }
+
+        public Board()
+        {
+
+        } //for testing 
 
         public Board(IPlayer x, IPlayer y, ConsoleColor defCol = ConsoleColor.Gray)
         {
@@ -221,6 +243,37 @@ namespace Morabaraba9001.Display
 
             }
             return false;
+        }
+
+        public void RecordHighScore()
+        {
+            if (!File.Exists("Highscore.txt"))  //create file if not exists
+                File.CreateText("Highscore.txt");
+
+            using (StreamWriter score = new StreamWriter("Highscore.txt"))  //automatically dispose of stream after use
+            {
+                score.Write(String.Format("Winner: {0}, Loser: {1}, Number of Turns: {2} \n", winner.name, loser.name, Turns));
+            }
+        }
+
+        public void OpenHighScore()
+        {
+            try
+            {
+                using (StreamReader score = File.OpenText("Highscore.txt"))
+                {
+                    while (!score.EndOfStream)
+                    {
+                        Console.WriteLine(score.ReadLine());
+                    }
+                }
+                Console.ReadLine();
+            }
+            catch (FileNotFoundException x)
+            {
+                Console.WriteLine(x.Message + "\nNo HighScores Exist! Play The game to make new highscores.");
+                Console.ReadLine();
+            }
         }
     }
 }
