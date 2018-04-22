@@ -15,8 +15,9 @@ namespace Morabaraba9001.Data
         void ShootCow(IPosition pos);
         void MoveCow(IPosition oldPos, IPosition newPos);
         IEnumerable<IEnumerable<IPosition>> GetMills(IPosition Pos);
-        IList<IPosition> Cows { get; set; }
+        IList<Position> Cows { get; set; }
         ConsoleColor playerColor { get; set; }
+        int placedCows { get; set; }
     }
 
     public class Player : IPlayer
@@ -26,18 +27,18 @@ namespace Morabaraba9001.Data
         public string name;
         ConsoleColor myColor;
         public int myPlacedCows, myDeadCows;
-        IList<IPosition> myCows = new List<Position>();
+        IList<Position> myCows = new List<Position>();
         public string cowState;
         public List<Position[]> MyMills;
         Position tmpPos = new Position("");
 
         #endregion
 
-        public IList<IPosition> Cows { get {return myCows; } set { (List<Position>) myCows = value; } }
+        public IList<Position> Cows { get { return myCows; } set { myCows = value; } }
 
-        public ConsoleColor playerColor { get { return myColor; } set { myColor = value; }  }
+        public ConsoleColor playerColor { get { return myColor; } set { myColor = value; } }
 
-        public int placedCows { get { return myPlacedCows; } set { myPlacedCows = value; } }   
+        public int placedCows { get { return myPlacedCows; } set { myPlacedCows = value; } }
         public int deadCows { get { return myDeadCows; } set { myDeadCows = value; } }
 
 
@@ -58,7 +59,7 @@ namespace Morabaraba9001.Data
         }
 
         public Player() //for testing purposes never use in actual code!
-        {            
+        {
             placedCows = 0;
             deadCows = 0;
             Cows = new List<Position>();
@@ -73,7 +74,7 @@ namespace Morabaraba9001.Data
         /// <returns>Bool: If cow is in a mill then True otherwise return false</returns>
         public bool InMill(IPosition p)
         {
-            Position pos = (Position) p;
+            Position pos = (Position)p;
             foreach (Position[] tmpArr in MyMills)
             {
                 foreach (Position tmp in tmpArr)
@@ -89,7 +90,7 @@ namespace Morabaraba9001.Data
         /// <returns>True if all players cows are in a mill otherwise return false</returns>
         public bool AllInAMill()    //to be called to check if shooting a cow in a mill is allowed, only if all of players cows are in a mill
         {
-            
+
             foreach (var myCow in Cows)
             {
                 if (InMill(myCow))
@@ -124,7 +125,7 @@ namespace Morabaraba9001.Data
         public void ShootCow(IPosition p)
         {
             Position pos = (Position)p;
-            List<Position> temp = new List<Position>();
+            IList<Position> temp = new List<Position>();
             foreach (var myCow in Cows)
             {
                 if (!(myCow == pos))
@@ -155,7 +156,7 @@ namespace Morabaraba9001.Data
          * NOTE: This method needs to be called before a cow is added to a players cow list so as to check if any mills will be made by the player this makes it so that 
          * there is no need to keep track of the players previous state and next state. 
          */
-        public IEnumerable<IEnumerable<IPosition>> GetMills(IPosition p) 
+        public IEnumerable<IEnumerable<IPosition>> GetMills(IPosition p)
         {
             Position Pos = (Position)p;
             List<Position[]> possibleMills = (List<Position[]>)tmpPos.GetPossibleMills(Pos.pos);

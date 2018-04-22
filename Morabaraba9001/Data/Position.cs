@@ -48,6 +48,7 @@ namespace Morabaraba9001.Data
         {
             this.pos = pos;
         }
+
         /// <summary>
         /// Method to convert string representation of a Cow into a 'Position' class instance
         /// </summary>
@@ -133,6 +134,7 @@ namespace Morabaraba9001.Data
             }
             //return StaticGetPosition(pos);
         }
+
         /// <summary>
         /// Takes in a position and return a list of all the positions on the board adjacent to it 
         /// </summary>
@@ -268,6 +270,7 @@ namespace Morabaraba9001.Data
             return ret;
             //return StaticGetAdjacentPositions(pos);
         }
+
         /// <summary>
         /// Takes in a position and return all possible mill combos involving that position 
         /// </summary>
@@ -516,16 +519,7 @@ namespace Morabaraba9001.Data
         public override string ToString()   //This is called when using String.Format to print board positions 
         {
             return pos;
-        }
-
-        //static versions of methods to call
-
-       
-
-
-        
-
-      
+        }      
 
         #region All Possible Positions on the board 
         public static Position A1 = new Position("A1");
