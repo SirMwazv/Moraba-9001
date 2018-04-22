@@ -17,51 +17,56 @@ namespace Morabaraba9001.Display
         void SwapPlayers();
         bool IsValidInput(string str, Phase phase);
         bool CheckPhase();
+        int Turns { get; set; }
     }
 
     public class Board : IBoard
     {
-        IPlayer X;
-        IPlayer Y;
+        IPlayer X, Y, winner, loser;
         ConsoleColor defaultColor;
-        IList<IPosition> CowList1; //list of cows for player 1
-        IList<IPosition> CowList2; //list of cows for player 2
+        IList<Position> CowList1; //list of cows for player 1
+        IList<Position> CowList2; //list of cows for player 2
         Phase phase;
+        int turns;
+        public Position Positions = new Position("");
+        public int Turns { get { return turns; } set { turns = value; } }
 
         public Board(IPlayer x, IPlayer y, ConsoleColor defCol = ConsoleColor.Gray)
         {
             X = x;
             Y = y;
             defaultColor = defCol;
+            winner = new Player();
+            loser = new Player();
         }
 
         /// <summary>
         /// Function to print the board to the console 
         /// </summary>
         /// <param name="state">Game State variable holding all necesarry data about the game</param>
-        public void  PrintBoard()
+        public void PrintBoard()
         {
             X = new Player();
             Console.Clear();
-            CowList1 =  X.Cows;
-            CowList2 =  Y.Cows;
+            CowList1 = X.Cows;
+            CowList2 = Y.Cows;
 
             /// Takes a position and returns the correct color to print it in. 
             ConsoleColor myColor(Position pos)
             {
-                //iterate through current players cows
+                //iterate through X players cows
                 for (int i = 0; i < CowList1.Count; i++)
                 {
                     if (CowList1[i].ToString() == pos.ToString())
                         return X.playerColor;   //cow found return color
                 }
 
-                //iterate through opponent players cows
+                //iterate through Y players cows
                 for (int i = 0; i < CowList2.Count; i++)
                 {
                     if (CowList2[i].ToString() == pos.ToString())
                         return Y.playerColor;  //cow found return color
-                }               
+                }
 
                 return defaultColor;   //else return default console color
             }
@@ -71,20 +76,20 @@ namespace Morabaraba9001.Display
             void P(Position pos)
             {
                 Console.ForegroundColor = myColor(pos);
-                Console.Write(String.Format("{0}",pos));
+                Console.Write(String.Format("{0}", pos));
             }
 
             void B(string board)
 
-            {                
+            {
                 Console.ForegroundColor = defaultColor;
                 Console.Write(String.Format("{0}", board));
             }
             void PrintPlayer(IPlayer p)
             {
-                Player x = (Player) p;
+                Player x = (Player)p;
                 Console.ForegroundColor = x.playerColor;
-                string HUD = string.Format("{0} --> Placed Cows: {1} \t Dead Cows: {2} Cow State: {3}", x.name,x.placedCows,x.deadCows, x.cowState);
+                string HUD = string.Format("{0} --> Placed Cows: {1} \t Dead Cows: {2} Cow State: {3}", x.name, x.placedCows, x.deadCows, x.cowState);
                 Console.WriteLine(HUD);
                 Console.ForegroundColor = defaultColor;
             }
@@ -92,7 +97,7 @@ namespace Morabaraba9001.Display
             PrintPlayer(X);
             PrintPlayer(Y);
             B("\n");
-            Console.WriteLine("Game Phase: " + state.phase);
+            Console.WriteLine("Game Phase: " + phase);
             B("\n");
             B("\n");
             P(A7); B("----------"); P(D7); B("----------"); P(G7);
@@ -118,7 +123,7 @@ namespace Morabaraba9001.Display
         /// <param name="msg">Message to print to console</param>
         public void PrintErr(string msg)
         {
-            Console.WriteLine(String.Format("Error!:\t{0}. {1}",msg,"Press Enter To Continue."));
+            Console.WriteLine(String.Format("Error!:\t{0}. {1}", msg, "Press Enter To Continue."));
         }
 
         /// <summary>
@@ -128,22 +133,22 @@ namespace Morabaraba9001.Display
         /// <returns>True if position is free else returns false</returns>
         public bool IsValidPosition(Position inputPos)
         {
-            if (current.Cows.Contains(inputPos) || opponent.Cows.Contains(inputPos))
+            if (X.Cows.Contains(inputPos) || Y.Cows.Contains(inputPos))
                 return false;
             else
                 return true;
         }
 
         /// <summary>
-        /// Method to swap players by making 'current' player into 'opponent' and vice versa
+        /// Method to swap players by making 'X' player into 'Y' and vice versa
         /// </summary>
-        /// <param name="state">Current Game State</param>
+        /// <param name="state">X Game State</param>
         public void SwapPlayers()
         {
-            Player tmp = state.current;
-            state.current = state.opponent;
-            state.opponent = tmp;
-            state.Turns++;
+            Player tmp = (Player)X;
+            X = Y;
+            Y = tmp;
+            Turns++;
 
         }
 
@@ -151,14 +156,14 @@ namespace Morabaraba9001.Display
         /// Method that takes in input form console and gamestate phase and determines if input is in correct format
         /// </summary>
         /// <param name="str">Input from console</param>
-        /// <param name="phase">Current phase of the game state</param>
+        /// <param name="phase">X phase of the game state</param>
         /// <returns>True if input in correct format, otherwise false</returns>
-        public  bool IsValidInput(string str, Phase phase)
+        public bool IsValidInput(string str, Phase phase)
         {
             if (phase == Phase.Placing)
             {
                 if (str.Length == 2 && Char.IsLetter(str[0]) == true && Char.IsDigit(str[1]) == true)
-                    if (tmpPos.GetPosition(str) != Position.XX)
+                    if (Positions.GetPosition(str) != Position.XX)
                         return true;
             }
 
@@ -166,7 +171,7 @@ namespace Morabaraba9001.Display
             {
                 if (str.Length == 4 && Char.IsLetter(str[0]) == true && Char.IsDigit(str[1]) == true && Char.IsLetter(str[2]) == true && Char.IsDigit(str[3]) == true)
                 {
-                    if (tmpPos.GetPosition(str.Substring(0, 2)) != Position.XX && tmpPos.GetPosition(str.Substring(2, 2)) != Position.XX)
+                    if (Positions.GetPosition(str.Substring(0, 2)) != Position.XX && Positions.GetPosition(str.Substring(2, 2)) != Position.XX)
                         return true;
                 }
             }
@@ -177,35 +182,35 @@ namespace Morabaraba9001.Display
         /// <summary>
         /// Method that checks if game should move to next phase 
         /// </summary>
-        /// <param name="state">Current Game State</param>
+        /// <param name="state">X Game State</param>
         /// <returns>True if game should move to next phase otherwise returns false</returns>
         public bool CheckPhase()
         {
-            switch (state.phase)
+            switch (phase)
             {
                 case Phase.Placing:
-                    if (state.current.placedCows == 12 && state.opponent.placedCows == 12)
+                    if (X.placedCows == 12 && Y.placedCows == 12)
                     {
-                        state.phase = Phase.Moving;
+                        phase = Phase.Moving;
                         return true;
                     }
                     break;
 
                 case Phase.Moving:
 
-                    if (state.current.Cows.Count == 2)
+                    if (X.Cows.Count == 2)
                     {
-                        state.winner = state.opponent;
-                        state.loser = state.current;
-                        state.phase = Phase.Won;
+                        winner = Y;
+                        loser = X;
+                        phase = Phase.Won;
                         return true;
                     }
 
-                    if (state.opponent.Cows.Count == 2)
+                    if (Y.Cows.Count == 2)
                     {
-                        state.winner = state.current;
-                        state.loser = state.opponent;
-                        state.phase = Phase.Won;
+                        winner = X;
+                        loser = Y;
+                        phase = Phase.Won;
                         return true;
                     }
 
