@@ -13,55 +13,48 @@ namespace Morabaraba9001.Test
     [TestFixture]
     public class Tests
     {
-        #region Placing
         [Test]
+        #region Placing
         public void EmptyBoardOnGameStart()//if opponent and current have no placed cows, board is empty
         {
             //Arrange
-
-            Player p = new Player();
-
-           
+            IBoard b = new Board();
 
             //Act
-            //Player testplayer1 = p.current;
-            //Player testplayer2 = p.opponent;
+            IPlayer one = b.X;
+            IPlayer two = b.Y;
 
             //Assert
-            //Assert.That(testplayer1.placedCows == 0 && testplayer2.placedCows == 0);
-
-
+            Assert.That(one.placedCows == 0 && two.placedCows == 0);
         }
         [Test]
         public void PlayerWithDarkCowsPlaysFirst() //current is our equivalent of the player with dark pieces(dark colour being red) and the player who plays first in the QuickPlay Feature
         {
             //Arrange
-            //GameState test = new GameState();
-            Player testplayer1 = new Player();
+            IBoard b = new Board();
 
             //Act
-            //testplayer1 = test.current;
+            IPlayer one = b.X;
+            IPlayer two = b.Y;
+
 
             //Assert
-            Assert.That(testplayer1.playerColor == ConsoleColor.Red);
-        }   
+            Assert.That(one.playerColor == ConsoleColor.Red);
+        }
         [Test]
         public void CowsCanOnlyBePlacedOnEmptySpaces()
         {
             //Arrange
-            IBoard B = new Board();
-            
-            Player testplayer1 = new Player();
-            Player testplayer2 = new Player();
+            IBoard b = new Board();
 
-            Position p = new Position("");
+            IPlayer testplayer1 = b.X;
+            IPlayer testplayer2 = b.Y;
             Position[] player1 = new Position[] { A7, D7, C5 };
             testplayer1.Cows = player1.ToList();
             Position input = A7;
 
             //Act           
-            //Assert.That(!testplayer1.Cows.Contains(A7));
-            if (B.IsValidPosition(input) == true)
+            if (b.IsValidPosition(input) == true)
             {
                 testplayer2.Cows.Add(input);
             }
@@ -74,25 +67,17 @@ namespace Morabaraba9001.Test
         public void MaximumOf12PlacementsPerPlayer()//Our method of preventing more than 12 placements per player is by switching to the moving phase once both players reach 12 cows.
         {
             //Arrange
-            
+            IBoard b = new Board();
 
-             Board b = new Board();
-            b.phase = Phase.Placing;
-
-
-
-            Player p1 = new Player();
-            Player p2 = new Player();
-
-            p1.placedCows = 12;
-            p2.placedCows = 12;
+            b.X.placedCows = 12;
+            b.Y.placedCows = 12;
 
             //Act
             bool result = b.CheckPhase();
 
             //Assert
             Assert.That(result != false);
-   
+
         }
         [Test]
         public void CowsCannotBeMovedDuringPlacement()
@@ -108,50 +93,52 @@ namespace Morabaraba9001.Test
         public void CowCanOnlyMoveToAdjacentSpace()
         {
             //Arrange
-            //GameState test = new GameState();
-            
+            IBoard b = new Board();
 
             string oldpos1 = "A7";
             Position newpos1 = D7;
 
             string oldpos2 = "A7";
             Position newpos2 = A4;
-            Position p = new Position(oldpos1);
+
             //Act
-            bool isitadjacent1 = p.GetAdjacentPositions(oldpos1).Contains(newpos1);
-            bool isitadjacent2 = p.GetAdjacentPositions(oldpos2).Contains(newpos2);     
+            bool isitadjacent1 = b.Positions.GetAdjacentPositions(oldpos1).Contains(newpos1);
+            bool isitadjacent2 = b.Positions.GetAdjacentPositions(oldpos2).Contains(newpos2);     
+
+           
             
             //Assert
             Assert.That(isitadjacent1 = true);
             Assert.That(isitadjacent2 = true);
-           
+
         }
         [Test]
         public void CowCanOnlyMoveOnEmptySpace()
         {
             //Arrange
-            //GameState test = new GameState
-            //{
-            //    phase = Phase.Moving
-            //};
-            Player testplayer1 = new Player();
-            Player testplayer2 = new Player();
-            //testplayer1 = test.current;
-            //testplayer2 = test.opponent;
+            IBoard b = new Board();
+
+            //Act
+            IPlayer one = b.X;
+            IPlayer two = b.Y;
+
+
             Position[] player1 = new Position[] { A7, D7, C5 };
-            testplayer1.Cows = player1.ToList();
+            one.Cows = player1.ToList();
             string oldpos = "A4";
             Position newpos = A7;
 
             //Act                      
-            //if (test.IsValidPosition(newpos) == true) 
-            //{
-            //    testplayer2.Cows.Add(newpos);
-            //}
+            if (b.IsValidPosition(newpos) == true)
+            {
+                two.Cows.Add(newpos);
+            }
 
             //Assert
-            Assert.That(!testplayer2.Cows.Contains(A7));
-        } //needs to be looked at
+            Assert.That(!two.Cows.Contains(newpos));
+
+
+        } 
         [Test]
         public void MovingDoesNotIncreaseOrDecreaseNumberOfCowsOnTheBoard()
         {
