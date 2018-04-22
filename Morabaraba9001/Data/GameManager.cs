@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using static Morabaraba9001.Display.Board;
+using Morabaraba9001.Display;
 
 namespace Morabaraba9001.Data
 {
@@ -16,21 +15,171 @@ namespace Morabaraba9001.Data
     }
 
     public class GameManager : IGameManager
-    {
-        public GameState state;     //holds all the data of the current game state therefore access all player and game state variables through this field 
+    {       
+        IPlayer X, Y;
+        IBoard b;
         public bool replay = false; //represents if players wish to replay the game after it finished. 
-        Position tmpPos = new Position("");
+        IPosition tmpPos;
+
         /// <summary>
         /// Declare new Game Manager with predefined game state 
         /// </summary>
         /// <param name="state">New Game State to manage</param>
-        public GameManager(GameState state)
+        public GameManager()
         {
-            this.state = state;
-        }
+            X = new Player();
+            Y = new Player();
+            b = new Board(X,Y);
+            
+        }       
 
-        public GameManager()    //only for testing!
+        public void init()
         {
+            string cowArt = @"            
+                               /             \
+                              ((__-^^-,-^^-__))    Moooo!
+                               `-_---' `---_-'    /
+                                <__|o` 'o|__>    /
+                                   \  `  /      /
+                                    ): :(
+                                    :o_o:
+                                     ";
+
+            string title = "MORABARABA \n\n\n \t* Let the cow genocide begin! >:) * ";
+
+            Console.WriteLine(String.Format("{0} \n{1}", title, cowArt));
+
+            Console.WriteLine("Press 1 for Quickplay \nPress 2 to Setup Game \nPress 3 for HighScores \nPress any other button to Exit.");
+            switch (Console.ReadKey().KeyChar)
+            {
+                case '1':
+                    X = new Player("Player 1", ConsoleColor.Red);
+                    Y = new Player("Player 2", ConsoleColor.Green);
+                    b.Turns = 0;
+                    b.phase = Phase.Placing;                    
+                    break;
+                case '2':
+                    #region Setup Player 1
+                    Console.WriteLine("\nPlayer 1 please enter your name.");
+                    var p1Name = Console.ReadLine();
+                    ConsoleColor p1Col = new ConsoleColor();
+                    bool validCol = false;
+                    char p1ColChoice = 'X';
+                    while (!validCol)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\n" + p1Name + ", Choose your color:\n 1:Red \n 2:Blue\n 3:Green \n 4:Yellow");
+                        p1ColChoice = Console.ReadKey().KeyChar;
+                        switch (p1ColChoice)
+                        {
+                            case '1':
+                                p1Col = ConsoleColor.Red;
+                                validCol = true;
+                                break;
+                            case '2':
+                                p1Col = ConsoleColor.Blue;
+                                validCol = true;
+                                break;
+                            case '3':
+                                p1Col = ConsoleColor.Green;
+                                validCol = true;
+                                break;
+                            case '4':
+                                p1Col = ConsoleColor.Yellow;
+                                validCol = true;
+                                break;
+                            default:
+                                b.PrintErr("\nInvalid Selection! Please pick a valid number.");
+                                Console.ReadLine();
+                                break;
+                        }
+                    }
+                    Player p1 = new Player(p1Name, p1Col);
+                    X = p1;
+                    #endregion
+
+                    #region Setup Player 2
+                    Console.WriteLine("\nPlayer 2 please enter your name.");
+                    var p2Name = Console.ReadLine();
+                    ConsoleColor p2Col = new ConsoleColor();
+                    validCol = false;
+                    char p2ColChoice = 'X';
+                    while (!validCol)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\n" + p2Name + ", Choose your color:\n 1:Red \n 2:Blue\n 3:Green \n 4:Yellow");
+                        p2ColChoice = Console.ReadKey().KeyChar;
+                        if (p1ColChoice == p2ColChoice)
+                        {
+                            b.PrintErr("\nInvalid Selection! NOTE: You can't have the same colour as your opponent!");
+                            Console.ReadLine();
+                            continue;
+                        }
+
+                        switch (p2ColChoice)
+                        {
+                            case '1':
+                                p2Col = ConsoleColor.Red;
+                                validCol = true;
+                                break;
+                            case '2':
+                                p2Col = ConsoleColor.Blue;
+                                validCol = true;
+                                break;
+                            case '3':
+                                p2Col = ConsoleColor.Green;
+                                validCol = true;
+                                break;
+                            case '4':
+                                p2Col = ConsoleColor.Yellow;
+                                validCol = true;
+                                break;
+                            default:
+                                b.PrintErr("\nInvalid Selection! Please pick a valid number.");
+                                Console.ReadLine();
+                                break;
+                        }
+                    }
+                    Player p2 = new Player(p2Name, p2Col);
+                    Y = p2;
+                    #endregion
+
+                    #region Setup Console Color
+                    ConsoleColor bg = new ConsoleColor();
+                    Console.WriteLine("\nPlease Choose a Deafult Color for the console (background)\n 1:Gray \n 2:White \n 3:Cyan \n 4:DarkCyan");
+                    switch (Console.ReadKey().KeyChar)
+                    {
+                        case '1':
+                            bg = ConsoleColor.Gray;
+                            validCol = true;
+                            break;
+                        case '2':
+                            bg = ConsoleColor.White;
+                            validCol = true;
+                            break;
+                        case '3':
+                            bg = ConsoleColor.Cyan;
+                            validCol = true;
+                            break;
+                        case '4':
+                            bg = ConsoleColor.DarkCyan;
+                            validCol = true;
+                            break;
+                        default:
+                            b.PrintErr("\nInvalid Selection! Please pick a valid number.");
+                            break;
+                    }
+                    bg = b.defaultColor;
+                    #endregion
+                    break;
+                case '3':
+                    Console.WriteLine("");
+                    b.OpenHighScore();
+                    break;
+            }
+
+            if (replay)
+                init();
         }
 
         /// <summary>
@@ -40,7 +189,7 @@ namespace Morabaraba9001.Data
         {
             RunPlacing();
             RunMoving();           
-            Won(state.winner);
+            Won(b.winner);
         }
 
         /// <summary>
@@ -49,40 +198,40 @@ namespace Morabaraba9001.Data
         public void ShootACow()    //inner method to shoot a cow
         {
             Console.Clear();
-            PrintBoard(state);
+            b.PrintBoard();
 
-            Console.WriteLine(String.Format("MILL! {0}, which cow do you want to shoot?", state.current.name));
+            Console.WriteLine(String.Format("MILL! {0}, which cow do you want to shoot?", b.X.name));
             string shootMe = Console.ReadLine().ToUpper();
-            if (state.IsValidInput(shootMe, Phase.Placing))   //validate input (criteria for validation is the same as placing phase)
+            if (b.IsValidInput(shootMe, Phase.Placing))   //validate input (criteria for validation is the same as placing phase)
             {
                 Position shootMePos = (Position) tmpPos.GetPosition(shootMe);
-                if (state.opponent.Cows.Contains(shootMePos))   //check if cow belongs to opponent 
+                if (b.Y.Cows.Contains(shootMePos))   //check if cow belongs to opponent 
                 {
-                    if (state.opponent.AllInAMill() || (!(state.opponent.InMill(shootMePos)) && (state.opponent.Cows.Contains(shootMePos))) )    //only shoot any cow if all opponent's cows are in a mill
+                    if (b.Y.AllInAMill() || (!(b.Y.InMill(shootMePos)) && (b.Y.Cows.Contains(shootMePos))) )    //only shoot any cow if all opponent's cows are in a mill
                     {
-                        state.opponent.ShootCow(shootMePos);
-                        state.opponent.deadCows++;
-                        if (state.opponent.Cows.Count <= 3)
-                            state.opponent.FlyCows();           //fly players cows if they have 3 cows
-                        PrintBoard(state);
+                        b.Y.ShootCow(shootMePos);
+                        b.Y.deadCows++;
+                        if (b.Y.Cows.Count <= 3)
+                            b.Y.FlyCows();           //fly players cows if they have 3 cows
+                        b.PrintBoard();
                     }
-                    else if (state.opponent.InMill(shootMePos))
+                    else if (b.Y.InMill(shootMePos))
                     {
-                        PrintErr("Can't shoot cows in a mill, unless all opponent's cows are in a mill!!");
+                        b.PrintErr("Can't shoot cows in a mill, unless all opponent's cows are in a mill!!");
                         Console.ReadLine();
                         ShootACow();
                     }                    
                 }
                 else
                 {
-                    PrintErr("Can Only Shoot Opponent Cows!!");
+                    b.PrintErr("Can Only Shoot Opponent Cows!!");
                     Console.ReadLine();
                     ShootACow();
                 }
             }
             else
             {
-                PrintErr("Enter Position in Correct format {XX} where XX is a position on the board.");
+                b.PrintErr("Enter Position in Correct format {XX} where XX is a position on the board.");
                 Console.ReadLine();
                 ShootACow();
             }
@@ -93,43 +242,43 @@ namespace Morabaraba9001.Data
         /// </summary>
         public void RunPlacing()
         {
-            while (!state.CheckPhase(state)) //keeps running placing phase till checkphase returns true (therefore game will be moved to the next phase)
+            while (!b.CheckPhase()) //keeps running placing phase till checkphase returns true (therefore game will be moved to the next phase)
             {
                 Console.Clear();
-                PrintBoard(state);
+                b.PrintBoard();
 
-                Console.WriteLine(state.current.name + ", where would you like to place a cow");
+                Console.WriteLine(b.X.name + ", where would you like to place a cow");
                 string input = Console.ReadLine().ToUpper();
 
-                if (state.IsValidInput(input, state.phase))   //validate string format 
+                if (b.IsValidInput(input, b.phase))   //validate string format 
                 {
                     //get the placing of new position 
                     Position newPos = (Position) tmpPos.GetPosition(input);
 
-                    if (state.IsValidPosition(newPos))    //validate position is free
+                    if (b.IsValidPosition(newPos))    //validate position is free
                     {
                         //check for and get  mills before adding or removing cows 
-                        List<Position[]> mills = (List<Position[]>) state.current.GetMills(newPos);
+                        List<Position[]> mills = (List<Position[]>) b.X.GetMills(newPos);
 
-                        state.current.Cows.Add(newPos);     //add new cow to cow list
-                        state.current.placedCows++;         //increase placed cows count
+                        b.X.Cows.Add(newPos);     //add new cow to cow list
+                        b.X.placedCows++;         //increase placed cows count
 
-                        PrintBoard(state); //show placing of cows
+                        b.PrintBoard(); //show placing of cows
 
                         //allow player to shootCow if a mill has been made
                         if (mills.Count > 0)
                         {
-                            state.current.MyMills.AddRange(mills);  //add mills so that a player can't reuse mills or use more than one mill per turn                             
+                            b.X.MyMills.AddRange(mills);  //add mills so that a player can't reuse mills or use more than one mill per turn                             
                             ShootACow();
                         }
-                        state.SwapPlayers(state); 
+                        b.SwapPlayers(); 
 
                     }
                     
                    
                     else
                     {
-                        PrintErr("Can't move to a position already in use!");
+                        b.PrintErr("Can't move to a position already in use!");
                         Console.ReadLine();
                         continue;
                     }
@@ -138,7 +287,7 @@ namespace Morabaraba9001.Data
 
                 else
                 {
-                    PrintErr("Input must be in correct format!");
+                    b.PrintErr("Input must be in correct format!");
                     Console.ReadLine();
                     continue;
                 }
@@ -150,52 +299,52 @@ namespace Morabaraba9001.Data
         /// </summary>
         public void RunMoving()
         {
-            while (!state.CheckPhase(state)) //keeps running moving phase till checkphase returns true (therefore game will be won)
+            while (!b.CheckPhase()) //keeps running moving phase till checkphase returns true (therefore game will be won)
             {
                 Console.Clear();    
-                PrintBoard(state);
+                b.PrintBoard();
 
-                Console.WriteLine(state.current.name + ", which cow do you wish to move (Format: {XXYY} Where XX is starting position and YY is final position)");
+                Console.WriteLine(b.X.name + ", which cow do you wish to move (Format: {XXYY} Where XX is starting position and YY is final position)");
                 string input = Console.ReadLine().ToUpper();
 
 
-                if (state.IsValidInput(input, state.phase))   //validate string format 
+                if (b.IsValidInput(input, b.phase))   //validate string format 
                 {
                     //split input and get old position and new position 
                     Position oldPos = (Position) tmpPos.GetPosition(input.Substring(0,2));    
                     Position newPos = (Position) tmpPos.GetPosition(input.Substring(2, 2));
 
-                    if (state.IsValidPosition(newPos) && state.current.Cows.Contains(oldPos))    //validate new position is free and player owns the old cow 
+                    if (b.IsValidPosition(newPos) && b.X.Cows.Contains(oldPos))    //validate new position is free and player owns the old cow 
                     {
-                        if (state.current.IsFlying() || tmpPos.GetAdjacentPositions(oldPos.pos).Contains(newPos))   //check for flying cows or if cows are adjacent 
+                        if (b.X.IsFlying() || tmpPos.GetAdjacentPositions(oldPos.pos).Contains(newPos))   //check for flying cows or if cows are adjacent 
                         {
                             //check for and get  mills before adding or removing cows 
-                            state.current.Cows.Remove(oldPos); //temporarily remove old position before checking mills
-                            List<Position[]> mills = (List<Position[]>) state.current.GetMills(newPos);
-                            state.current.Cows.Add(oldPos);// add temp removed cow
+                            b.X.Cows.Remove(oldPos); //temporarily remove old position before checking mills
+                            List<Position[]> mills = (List<Position[]>) b.X.GetMills(newPos);
+                            b.X.Cows.Add(oldPos);// add temp removed cow
 
-                            state.current.MoveCow(oldPos, newPos);  //move the cows                            
+                            b.X.MoveCow(oldPos, newPos);  //move the cows                            
 
-                            PrintBoard(state); //show move of cows
+                            b.PrintBoard(); //show move of cows
 
                             //allow player to shootCow if a mill has been made
                             if (mills.Count > 0)
                             {
-                                state.current.MyMills.AddRange(mills);  //add mills so that a player can't reuse mills or use more than one mill per turn                             
+                                b.X.MyMills.AddRange(mills);  //add mills so that a player can't reuse mills or use more than one mill per turn                             
                                 ShootACow();
                             }
-                            state.SwapPlayers(state);
+                            b.SwapPlayers();
                         }
                         else
                         {
-                            PrintErr("Can't move to a position that is not adjacent, if cows are not flying!");
+                            b.PrintErr("Can't move to a position that is not adjacent, if cows are not flying!");
                             Console.ReadLine();
                             continue;
                         }
                     }
                     else
                     {
-                        PrintErr("Can only move your cows to a free position!");
+                        b.PrintErr("Can only move your cows to a free position!");
                         Console.ReadLine();
                         continue;
                     }
@@ -205,7 +354,7 @@ namespace Morabaraba9001.Data
 
                 else
                 {
-                    PrintErr("Input must be in correct format!");
+                    b.PrintErr("Input must be in correct format!");
                     Console.ReadLine();
                     continue;
                 }
