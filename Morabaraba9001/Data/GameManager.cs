@@ -206,7 +206,8 @@ namespace Morabaraba9001.Data
                     {
                         b.Y.ShootCow(shootMePos);
                         b.Y.deadCows++;
-                        if (b.Y.Cows.Count <= 3)
+
+                        if (b.Y.Cows.Count <= 3 && b.Y.deadCows >= 9)
                             b.Y.FlyCows();           //fly players cows if they have 3 cows
                         b.PrintBoard();
                     }
