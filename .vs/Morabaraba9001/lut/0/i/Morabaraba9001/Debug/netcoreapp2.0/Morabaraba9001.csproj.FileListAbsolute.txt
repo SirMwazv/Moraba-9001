@@ -1,0 +1,4 @@
+J:\M\Morabaraba-9001\.vs\Morabaraba9001\lut\0\i\Morabaraba9001\Debug\netcoreapp2.0\Morabaraba9001.csprojResolveAssemblyReference.cache
+J:\M\Morabaraba-9001\.vs\Morabaraba9001\lut\0\i\Morabaraba9001\Debug\netcoreapp2.0\Morabaraba9001.csproj.CoreCompileInputs.cache
+J:\M\Morabaraba-9001\.vs\Morabaraba9001\lut\0\i\Morabaraba9001\Debug\netcoreapp2.0\Morabaraba9001.AssemblyInfoInputs.cache
+J:\M\Morabaraba-9001\.vs\Morabaraba9001\lut\0\i\Morabaraba9001\Debug\netcoreapp2.0\Morabaraba9001.AssemblyInfo.cs
